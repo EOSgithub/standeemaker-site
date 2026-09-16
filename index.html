@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Standee Maker 1.0</title>
+<meta name="description" content="Standee Maker turns any image into a 3D-printable figure and into the stand that holds it upright next to the card in its toploader. Free trial, no account.">
+<!-- TODO rilascio: dominio reale in og:url e og:image (vedi README.md) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Standee Maker: from an image to a printable stand">
+<meta property="og:description" content="Two SVGs, an extruded figure already mounted on its base, and the stand with the slot for the toploader. Runs locally on Windows.">
+<meta property="og:url" content="https://example.com/">
+<meta property="og:image" content="https://example.com/assets/social.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ====================================================== barra in alto -->
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brand" href="#top">
+      <svg class="mark" viewBox="0 0 30 24" aria-hidden="true">
+        <rect x="1.5" y="2.5" width="21" height="19" fill="none" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M22.5 21.5 L28.5 21.5" stroke="var(--amber)" stroke-width="2.6"/>
+        <path d="M6 17 L12 7 L18 17" fill="none" stroke="currentColor" stroke-width="1.6"/>
+      </svg>
+      <span class="name">Standee Maker</span>
+      <span class="ver">1.0</span>
+    </a>
+    <nav class="topnav" aria-label="Sections of this page">
+      <a href="#how">How it works</a>
+      <a href="#app">The app</a>
+      <a href="#tutorial">Tutorial</a>
+      <a href="#examples">Examples</a>
+      <a href="#pricing">Pricing</a>
+    </nav>
+    <button class="btn" type="button" data-open="dlg-trial">Download the trial</button>
+  </div>
+</header>
+
+<main id="top">
+<div class="wrap">
+
+  <p class="lead">Standee Maker turns any image into a 3D-printable figure and into the stand that holds it upright next to the card in its toploader.</p>
+
+  <!-- ============================================================== catena -->
+  <section id="how">
+    <div class="stack-l">
+      <p class="eyebrow">The chain</p>
+      <div class="chain">
+        <div class="stack">
+          <h1 class="as-section">Three states of the same part</h1>
+          <p>Both outlines come out with the <em>same bounding box</em>, so they sit on top of each
+          other without realigning them; the solid arrives with the base already welded under its
+          feet.</p>
+
+          <div class="steps" role="tablist" aria-label="States of the part">
+            <button class="step" role="tab" id="s0" aria-selected="true" aria-controls="stage">
+              <span class="n">01</span><span class="t">The image</span>
+              <span class="d">An image dropped into the library. Transparent background or not, that gets sorted later.</span>
+            </button>
+            <button class="step" role="tab" id="s1" aria-selected="false" aria-controls="stage">
+              <span class="n">02</span><span class="t">The two outlines</span>
+              <span class="d">Silhouette and line art, in two files, overlaid the way the app shows them.</span>
+            </button>
+            <button class="step" role="tab" id="s2" aria-selected="false" aria-controls="stage">
+              <span class="n">03</span><span class="t">The part</span>
+              <span class="d">One STL for the figure, one for the block.</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="stage" id="stage">
+          <div class="stage-in">
+            <img class="on" id="h0" src="assets/source.webp" alt="The starting image: a colour character on a transparent background">
+            <img id="h1" src="assets/trace/line_0_9.svg" alt="The two SVGs overlaid: silhouette in grey, line art in black">
+            <div class="turn-box" id="h2" tabindex="0" role="slider" aria-label="Turn the part"
+                 aria-valuemin="0" aria-valuemax="29" aria-valuenow="0">
+              <img id="turn-img" src="assets/turn/t00.webp" draggable="false" alt="The finished part, figure slotted into its stand, seen from one side">
+              <span class="turn-tag" id="turn-tag">Drag to turn it</span>
+            </div>
+          </div>
+          <p class="caption" id="cap"><b>Chopper_cutout</b><span>image &middot; 604 &times; 799 px</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ schermate -->
+  <section id="app">
+    <div class="stack-l">
+      <p class="eyebrow">The interface</p>
+      <div class="stack">
+        <h2>How Standee Maker works</h2>
+        <p>Pick an image: it becomes a part in two steps, <em>Trace</em> that reads the drawing and
+        <em>Figure</em> that extrudes it and mounts it.</p>
+      </div>
+
+      <div class="stack">
+        <div class="tabs" role="tablist" aria-label="Pages of the app">
+          <button class="tab" role="tab" id="p0" aria-selected="true" aria-controls="shot"><span class="k">1</span>Trace</button>
+          <button class="tab" role="tab" id="p1" aria-selected="false" aria-controls="shot"><span class="k">2</span>Figure</button>
+          <button class="tab" role="tab" id="p2" aria-selected="false" aria-controls="shot">Stand</button>
+        </div>
+
+        <div class="plate shot" id="shot">
+          <div class="frame">
+            <img class="on" id="u0" src="assets/ui/trace.webp" alt="The Trace page: library on the left, image and outline in the middle, measurements on the right">
+            <img id="u1" src="assets/ui/figure.webp" alt="The Figure page: the mount, with the drawing to scale and the sliders for the base">
+            <img id="u2" src="assets/ui/stand.webp" alt="The Stand page: the block seen in three dimensions with its two slots">
+          </div>
+        </div>
+        <p class="note" id="unote">The image on the left, what comes out of it on the right, at the
+        same height.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================= finestre -->
+  <section id="fixing">
+    <div class="stack-l">
+      <p class="eyebrow">Two work windows</p>
+      <div class="stack">
+        <h2>When the image won&rsquo;t cooperate</h2>
+        <p>An image can carry problems that spoil the conversion. The two windows below are there to
+        put them right.</p>
+      </div>
+      <div class="two">
+        <div>
+          <div class="plate"><img src="assets/ui/cutout.webp" loading="lazy" alt="The Remove background window: the wand has taken the background out, leaving the subject on a chequerboard"></div>
+          <h3>Remove background</h3>
+          <p class="note">The wand takes the background by colour, the box says where the subject is,
+          the two brushes fix the rest by hand. Here it is <b>two clicks</b>: the background, and the
+          pocket closed between the wing and the tail, which would otherwise stay.</p>
+        </div>
+        <div>
+          <div class="plate"><img src="assets/ui/retouch.webp" loading="lazy" alt="The Touch up window: eraser and pencil on the line art just traced"></div>
+          <h3>Touch up</h3>
+          <p class="note">Eraser and pencil on the line art, before it becomes a solid. Shift draws a
+          straight line.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================= tutorial -->
+  <section id="tutorial">
+    <div class="stack-l">
+      <p class="eyebrow">Tutorial</p>
+      <div class="stack">
+        <h2>One Squirtle, from the image to the painted stand</h2>
+        <p>Every step in the real program, on a real subject: the image goes in on a white
+        background and comes out as a figure standing next to its card. Nothing is skipped,
+        <em>the touch-ups included</em>, and every screen is marked where to look.</p>
+      </div>
+      <div class="stack">
+        <button class="plate tour-poster" type="button" data-tour="0">
+          <img src="assets/tutorial/traced.webp" loading="lazy" alt="The Trace page with Squirtle: the picture on the left, the finished trace on the right">
+          <span class="tour-play">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 2.5v11l9-5.5z" fill="currentColor"/></svg>
+            Watch the tutorial
+          </span>
+        </button>
+        <p class="fineprint">6 steps, from the image to the finished piece &middot; arrow keys to move through them</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================================== esempi -->
+  <section id="examples">
+    <div class="stack-l">
+      <p class="eyebrow">Twelve subjects, no touch-ups</p>
+      <div class="stack">
+        <h2>Taken from the library and traced as they were</h2>
+        <p>All of them on the starting values, none corrected by hand. Drag the amber line to
+        uncover the trace under the image.</p>
+      </div>
+      <div class="grid" id="grid"></div>
+      <div><button class="btn btn-ghost" type="button" id="more">Show all twelve</button></div>
+    </div>
+  </section>
+
+  <!-- ============================================================== licenza -->
+  <section id="pricing">
+    <div class="stack-l">
+      <p class="eyebrow">Licence</p>
+      <div class="stack">
+        <h2>Two editions, the same program</h2>
+        <p>The only difference is in the licence, not in the code: there is nothing to unlock, and
+        both editions have exactly the same features. I never liked the usual formula. Everyone
+        is out to sell you a recurring service, so you spend more without noticing. For Standee Maker
+        you pay <b>once</b> and the software is <b>yours for good</b>.</p>
+      </div>
+
+      <div class="plans">
+        <div class="plan">
+          <div class="plan-head">
+            <span class="plan-name">Maker</span>
+            <span class="plan-for">for printing for yourself</span>
+          </div>
+          <p class="price"><span class="cur">&euro;</span><span class="fig">19.99</span><span class="once">once</span></p>
+          <ul>
+            <li><svg class="tick" viewBox="0 0 12 12" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6.5 4.5 10 11 2"/></svg><span>Personal, educational and in-house business use</span></li>
+            <li><svg class="tick" viewBox="0 0 12 12" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6.5 4.5 10 11 2"/></svg><span>You may <b>give away</b> the parts you print</span></li>
+            <li><svg class="tick" viewBox="0 0 12 12" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6.5 4.5 10 11 2"/></svg><span>Two computers per licence, movable</span></li>
+            <li><svg class="cross" viewBox="0 0 12 12" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 2 10 10M10 2 2 10"/></svg><span>You may not sell the parts, or make them to order</span></li>
+          </ul>
+          <p class="note" style="margin-top:auto">The program is identical to the Commercial one.</p>
+        </div>
+
+        <div class="plan dark">
+          <div class="plan-head">
+            <span class="plan-name">Commercial</span>
+            <span class="plan-for">for selling what you print</span>
+          </div>
+          <p class="price"><span class="cur">&euro;</span><span class="fig">99.99</span><span class="once">once</span></p>
+          <ul>
+            <li><svg class="tick" viewBox="0 0 12 12" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6.5 4.5 10 11 2"/></svg><span>Everything in Maker</span></li>
+            <li><svg class="tick" viewBox="0 0 12 12" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6.5 4.5 10 11 2"/></svg><span><b>Sell</b> the parts you print, made to order included</span></li>
+            <li><svg class="tick" viewBox="0 0 12 12" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6.5 4.5 10 11 2"/></svg><span>Use them in a business that sells goods or services</span></li>
+            <li><svg class="tick" viewBox="0 0 12 12" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6.5 4.5 10 11 2"/></svg><span>Two computers per licence, movable</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="buybar">
+        <button class="btn" type="button" data-open="dlg-trial">
+          <svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7">
+            <path d="M8 1.5v9m0 0L4.5 7M8 10.5 11.5 7"/><path d="M2 12.5v2h12v-2"/>
+          </svg>
+          Download the free trial
+        </button>
+        <button class="btn-line" type="button" data-open="dlg-buy">Buy a licence</button>
+        <p class="fineprint">Free trial, no account &middot; 3 subjects a week for 14 days</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================== faq -->
+  <section id="faq">
+    <div class="stack-l">
+      <p class="eyebrow">Questions</p>
+      <h2>Frequently asked</h2>
+      <div class="faq">
+        <details>
+          <summary>What can I do with the trial?</summary>
+          <div class="answer">Everything. I decided to hold nothing back in the trial: the files come
+          out at full size and full quality, <b>with no watermark</b>. The only limits are how many
+          and how long: three new subjects every seven days, and fourteen days after the first
+          run the program stops writing files. If all you mean to print is one stand for your
+          favourite card, you don&rsquo;t need anything else.</div>
+        </details>
+        <details>
+          <summary>Do I need an internet connection?</summary>
+          <div class="answer">Never to work: images, SVGs and STLs do not leave your computer. It is
+          needed <b>once</b>, to activate your licence key; the other 99% of the time Standee Maker
+          runs offline.</div>
+        </details>
+        <details>
+          <summary>How many computers can I install it on?</summary>
+          <div class="answer">Two, owned or controlled by you. A licence can move: you release the
+          activation on one machine and activate it on another.</div>
+        </details>
+        <details>
+          <summary>What printer do I need?</summary>
+          <div class="answer">The one you have. Standee Maker writes <b>STL</b> files: you open them in
+          your slicer like any other model. The starting values are meant for an FDM printer with a
+          0.4 mm nozzle, and that is where the minimum line width (<span class="mm">0.8 mm</span>)
+          makes sense.</div>
+        </details>
+        <details>
+          <summary>Which images can I use?</summary>
+          <div class="answer">Yours, or ones you have the right to use. The program does not check
+          and does not judge: it converts what you give it, and <b>the subject stays your
+          responsibility</b>.</div>
+        </details>
+        <details>
+          <summary>What if it turns out not to be for me?</summary>
+          <div class="answer">The trial is there to find that out before you pay. After a purchase
+          the <a href="#" class="todo" data-todo="terms">Terms of sale</a> apply.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+</div>
+</main>
+
+<footer>
+  <div class="foot-in">
+    <span>Standee Maker 1.0 &middot; <span class="todo" data-todo="seller">[LEGAL NAME]</span> &middot; VAT <span class="todo" data-todo="vat">[NUMBER]</span></span>
+    <nav aria-label="Documents and contact">
+      <a href="#" class="todo" data-todo="eula">Licence agreement</a>
+      <a href="#" class="todo" data-todo="terms">Terms of sale</a>
+      <a href="#" class="todo" data-todo="privacy">Privacy</a>
+      <a href="#" class="todo" data-todo="support">Support</a>
+    </nav>
+  </div>
+</footer>
+
+<!-- ======================================================= modale: prova -->
+<dialog id="dlg-trial" aria-labelledby="dlg-trial-t">
+  <div class="dlg">
+    <div class="dlg-head">
+      <div class="titles">
+        <h2 id="dlg-trial-t">Free trial</h2>
+        <p class="sub">Standee Maker 1.0.0 &middot; Windows 10 / 11 &middot; 64-bit</p>
+      </div>
+      <button class="dlg-x" type="button" data-close aria-label="Close">&times;</button>
+    </div>
+
+    <div class="dlg-body">
+      <p>It is the whole program. <b>Nothing that comes out of the trial is marked in any way</b>:
+      full size, full quality, no watermark. What limits you is the number of subjects and the
+      days.</p>
+      <dl class="terms">
+        <dt>Subjects</dt><dd><b>3 new subjects</b> every 7 days. A subject is one image taken as far
+        as you like: re-tracing it, touching it up, regenerating it and building its STL is still
+        one subject.</dd>
+        <dt>Time</dt><dd><b>14 days</b> from the first run; after that the program still opens, but
+        stops writing files.</dd>
+        <dt>Use</dt><dd>What you print during the trial is for judging the result: <b>it is not for
+        sale</b>, whichever edition you buy afterwards.</dd>
+        <dt>Account</dt><dd>None. Nothing is registered and nothing is uploaded.</dd>
+      </dl>
+      <div class="callout" id="trial-state">
+        <b>The file is not published yet.</b> The link will appear here at release.
+      </div>
+    </div>
+
+    <div class="dlg-foot">
+      <a class="btn btn-block" id="trial-dl" href="#" aria-disabled="true">
+        <svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7">
+          <path d="M8 1.5v9m0 0L4.5 7M8 10.5 11.5 7"/><path d="M2 12.5v2h12v-2"/>
+        </svg>
+        <span id="trial-dl-label">Download Standee Maker Setup 1.0.0</span>
+      </a>
+      <p class="hint" id="trial-meta">.exe &middot; <span class="todo">[SIZE]</span> &middot;
+      SHA-256 <span class="todo">[CHECKSUM]</span></p>
+    </div>
+  </div>
+</dialog>
+
+<!-- ==================================================== modale: acquisto -->
+<dialog id="dlg-buy" aria-labelledby="dlg-buy-t">
+  <div class="dlg">
+    <div class="dlg-head">
+      <div class="titles">
+        <h2 id="dlg-buy-t">Buy a licence</h2>
+        <p class="sub">One-time payment</p>
+      </div>
+      <button class="dlg-x" type="button" data-close aria-label="Close">&times;</button>
+    </div>
+
+    <div class="dlg-body">
+      <form class="picks" id="picks">
+        <label class="pick" for="pick-maker">
+          <input type="radio" name="edition" id="pick-maker" value="maker" checked>
+          <span class="who">
+            <span class="n">Maker</span>
+            <span class="w">You print for yourself.</span>
+          </span>
+          <span class="p">&euro;&nbsp;19.99</span>
+        </label>
+        <label class="pick" for="pick-commercial">
+          <input type="radio" name="edition" id="pick-commercial" value="commercial">
+          <span class="who">
+            <span class="n">Commercial</span>
+            <span class="w">You sell the parts you print, made to order included.</span>
+          </span>
+          <span class="p">&euro;&nbsp;99.99</span>
+        </label>
+      </form>
+
+      <dl class="terms">
+        <dt>How it arrives</dt><dd>A <b>key</b> by email, right after payment. You paste it into the
+        program, under <b>Help &rarr; Licence</b>, and that machine is activated.</dd>
+        <dt>Computers</dt><dd>Two per licence. It moves by releasing the activation from inside the
+        program.</dd>
+        <dt>Tax</dt><dd>Where local tax applies it is added at checkout by the reseller, who also
+        issues the invoice.</dd>
+      </dl>
+
+      <div class="callout">
+        <b>Haven&rsquo;t tried it yet?</b> The trial is the whole program and does not mark your
+        files: it is worth making one part before you buy.
+      </div>
+    </div>
+
+    <div class="dlg-foot">
+      <a class="btn btn-block" id="buy-go" href="#" aria-disabled="true">
+        <span id="buy-go-label">Go to checkout: Maker, &euro;&nbsp;19.99</span>
+      </a>
+      <p class="hint" id="buy-meta">Checkout opens on <span class="todo">[RESELLER]</span>
+      in a new tab.</p>
+    </div>
+  </div>
+</dialog>
+
+<!-- ==================================================== modale: tutorial -->
+<!-- Vuoto: i passi li scrive main.js (TOUR). -->
+<dialog id="dlg-tour" class="tour" aria-labelledby="tour-h">
+  <div class="dlg">
+    <div class="dlg-head">
+      <div class="titles">
+        <h2 id="tour-h">Tutorial</h2>
+        <p class="sub" id="tour-sub">Step 1 of 16</p>
+      </div>
+      <button class="dlg-x" type="button" data-close aria-label="Close">&times;</button>
+    </div>
+
+    <nav class="tour-bar" id="tour-bar" aria-label="Chapters"></nav>
+
+    <div class="tour-body">
+      <div class="tour-stage" id="tour-stage">
+        <div class="tour-shot" id="tour-shot">
+          <img id="tour-img" alt="">
+          <svg id="tour-svg" aria-hidden="true"></svg>
+          <div class="tour-todo" id="tour-todo" hidden></div>
+        </div>
+      </div>
+      <div class="tour-text" id="tour-text">
+        <p class="tour-kicker" id="tour-kicker"></p>
+        <h3 id="tour-title"></h3>
+        <p class="tour-lede" id="tour-lede"></p>
+        <ol class="tour-notes" id="tour-notes"></ol>
+        <div class="callout" id="tour-tip" hidden></div>
+      </div>
+    </div>
+
+    <div class="tour-foot">
+      <button class="btn btn-ghost" type="button" id="tour-prev">
+        <svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M10 3 5 8l5 5"/></svg>
+        Back
+      </button>
+      <span class="tour-count" id="tour-count" aria-live="polite">1 / 16</span>
+      <button class="btn" type="button" id="tour-next">
+        <span id="tour-next-label">Next</span>
+        <svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m6 3 5 5-5 5"/></svg>
+      </button>
+    </div>
+  </div>
+</dialog>
+
+<script src="main.js"></script>
+</body>
+</html>
