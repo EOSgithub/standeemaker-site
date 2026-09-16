@@ -20,10 +20,10 @@
       sha256: null                  // es. "9f2c..."
     },
     buy: {
-      // TODO rilascio: i due checkout Lemon Squeezy (vedi license.py, BUY_URL)
+      // TODO rilascio: i due checkout Polar (vedi license.py)
       maker: null,                  // es. "https://.../checkout/buy/..."
       commercial: null,
-      vendor: null                  // es. "Lemon Squeezy"
+      vendor: null                  // es. "Polar"
     },
     prices: { maker: "19.99", commercial: "99.99" }
   };
