@@ -64,8 +64,14 @@
   // scorrimento verticale resta della pagina: chi scorre non deve trovarsi a
   // girare il pezzo invece di andare avanti.
   var TURN_N = 30, TURN_PX = 14;             // pixel di trascinamento per vista
+  // Le trenta viste hanno sempre lo stesso nome, ma il browser ne tiene una
+  // copia buona dieci minuti: rifattele, la prima (che sta nella pagina) si
+  // riscarica e le altre no, e il pezzo cambiava aspetto girandolo. Questo
+  // numero si alza a ogni `make_turn.py`, e la copia vecchia non viene piu'
+  // chiesta. Va tenuto uguale al `?v=` dell'immagine nella pagina.
+  var TURN_V = "?v=2";
   var turnBox = $("h2"), turnImg = $("turn-img"), turnTag = $("turn-tag");
-  var turnSrc = function (i) { return "assets/turn/t" + (i < 10 ? "0" : "") + i + ".webp"; };
+  var turnSrc = function (i) { return "assets/turn/t" + (i < 10 ? "0" : "") + i + ".webp" + TURN_V; };
   var turnAt = 0, turnAcc = 0, turnDrag = null, turnLoaded = false;
 
   function turnLoad() {                      // le viste si scaricano la prima volta che servono
