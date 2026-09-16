@@ -617,6 +617,7 @@ dialog.tour{
   border-radius:2px;padding:24px 22px;max-width:86ch;
 }
 .legal-text b{font-weight:500;color:var(--amber-ink)}
+.legal-pending{font-family:var(--text);font-size:16.5px;color:var(--ink-soft)}
 .legal-nav a[aria-current="page"]{color:var(--ink);border-bottom-color:var(--amber)}
 @media (max-width:760px){
   .legal-nav{display:flex;gap:14px;margin-left:0}
