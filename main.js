@@ -245,9 +245,9 @@
   // altezza] per un riquadro, ["click", x, y] per un clic. Il numero del segno
   // e' la sua posizione nella lista delle note.
   //
-  // Le tre foto finali non ci sono ancora: finche' img e' null il passo resta
-  // e dice cosa manca, invece di sparire.
-  var SHOT = [1500, 920], BOARD = [1180, 880], PHOTO = [1500, 1000];
+  // Un passo con img a null resta e dice cosa manca (il testo di todo),
+  // invece di sparire: serve se un giorno manca di nuovo un'immagine.
+  var SHOT = [1500, 920], BOARD = [1180, 880];
   var CHAPTERS = ["Image", "Background", "Trace", "Figure", "Stand", "Print"];
   var TOUR = [
     { ch: 0, img: "library", size: SHOT,
@@ -459,27 +459,24 @@
           "both parts to print."]
       ] },
 
-    // TODO foto: squirtle e stand nello slicer
-    { ch: 5, img: null, size: PHOTO,
-      todo: "Photo to come: Squirtle and the stand in the slicer",
-      title: "Into the slicer",
+    // Le tre foto sono verticali: la misura e' quella del file, e il palco le
+    // stringe in altezza invece di tagliarle (vedi fit).
+    { ch: 5, img: "print-bed", size: [1125, 1500],
+      title: "On the print bed",
       lede: "Open the two STLs in your slicer like any other model: nothing to scale, align or " +
-            "join, because they come out at their real size and already in one piece each.",
+            "join, because they come out at their real size and already in one piece each. " +
+            "Figure and stand lie flat and print side by side.",
       notes: [] },
 
-    // TODO foto: STL stampati e montati
-    { ch: 5, img: null, size: PHOTO,
-      todo: "Photo to come: the printed parts, assembled",
+    { ch: 5, img: "printed", size: [1146, 1500],
       title: "Printed and assembled",
-      lede: "The base slides into its slot, and the card in its toploader goes into the slot in " +
-            "front of it.",
+      lede: "The base of the figure slides into the slot at the back, and the card in its " +
+            "toploader goes into the slot in front of it.",
       notes: [] },
 
-    // TODO foto: stand pitturato con il toploader
-    { ch: 5, img: null, size: PHOTO,
-      todo: "Photo to come: the painted stand, with the card in its toploader",
-      title: "Painted, next to its card",
-      lede: "The line art stands out in relief, so it doubles as a guide for the brush. From a " +
+    { ch: 5, img: "painted", size: [1204, 1500],
+      title: "Painted by hand",
+      lede: "The line art stands out in relief, so it doubles as a guide for the brush. From an " +
             "image on a white background to the finished piece.",
       notes: [] }
   ];
@@ -523,6 +520,10 @@
     var h = tv.stage.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
     var stacked = getComputedStyle(tv.stage.parentNode).display === "block";
     if (!stacked && w / h > ar) { w = h * ar; }
+    // Impilato, il palco e' largo quanto lo schermo e alto quanto serve: una
+    // foto verticale a tutta larghezza spingerebbe titolo e testo sotto il
+    // bordo. Non piu' di tre quinti dell'altezza, e si stringe in larghezza.
+    if (stacked) { w = Math.min(w, window.innerHeight * 0.6 * ar); }
     tv.shot.style.width = Math.floor(w) + "px";
     tv.shot.style.height = Math.floor(w / ar) + "px";
     draw();
