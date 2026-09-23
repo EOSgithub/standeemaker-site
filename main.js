@@ -402,9 +402,11 @@
           "a few millimetres, so the feet stick out below it."],
         [[1108, 165, 362, 230], "The drawing to scale answers what the numbers leave out: <b>how " +
           "much of the figure stands above the card</b> in its toploader. 52 mm here."],
-        [[1108, 412, 362, 160], "<b>Raise the figure</b> lifts it above the card, for short and wide " +
-          "subjects the card would hide. <b>Base length</b> should span the two outermost feet. " +
-          "<b>Base height</b> is 10 mm inside the slot plus what stays in sight."]
+        [[1108, 412, 362, 105], "<b>Raise the figure</b> lifts it above the card, for short and wide " +
+          "subjects the card would hide. <b>Base length</b> should span the two outermost feet."],
+        [[1108, 566, 362, 26], "<b>Advanced</b>: how thick the silhouette and the line art come " +
+          "out, and <b>Base height</b>, 10 mm inside the slot plus what stays in sight. Set once, " +
+          "then left alone."]
       ] },
 
     { ch: 3, img: "figure-cut", size: SHOT,
@@ -431,7 +433,7 @@
           "open its folder."],
         [[1108, 688, 362, 46], "Every subject gets a folder of its own, and the stand made for it " +
           "lands in the same one. The gear at the top lets you choose where models go."],
-        [[1108, 574, 362, 30], "<b>Multicolor printing</b>, off unless you switch it on: two .3mf " +
+        [[1108, 522, 362, 28], "<b>Multicolor printing</b>, off unless you switch it on: two .3mf " +
           "files come out as well, with the line art as a second part. Open <b>_Bambu-Orca</b> in " +
           "Bambu Studio or OrcaSlicer, <b>_Prusa</b> in PrusaSlicer. With a single nozzle, Output " +
           "then shows the height at which to change filament."],
@@ -507,7 +509,7 @@
   // Come TURN_V: i riquadri di TOUR sono in pixel delle schermate, e una
   // schermata vecchia ancora nella cache sotto i riquadri nuovi li mette nel
   // posto sbagliato. Si alza a ogni `make_tutorial.py`.
-  var TOUR_V = "?v=5";
+  var TOUR_V = "?v=6";
   function src(step) { return step.img ? "assets/tutorial/" + step.img + ".webp" + TOUR_V : null; }
 
   // la barra dei capitoli: un segmento per passo, e il capitolo si preme
