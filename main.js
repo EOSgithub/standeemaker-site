@@ -21,11 +21,11 @@
     },
     buy: {
       // TODO rilascio: i due checkout Polar (vedi license.py)
-      maker: null,                  // es. "https://.../checkout/buy/..."
+      pro: null,                    // es. "https://.../checkout/buy/..."
       commercial: null,
-      vendor: null                  // es. "Polar"
+      vendor: "Polar"               // Polar Software, Inc.: il merchant of record
     },
-    prices: { maker: "19.99", commercial: "99.99" }
+    prices: { pro: "19.99", commercial: "99.99" }
   };
 
   var $ = function (id) { return document.getElementById(id); };
@@ -133,7 +133,7 @@
   var NOTES = [
     "The image on the left, what comes out of it on the right, at the same height.",
     "You work face-on, in 2D, and that is not a simplification: the part is an extrusion, so seen from the front it hides nothing. The little drawing at the top right answers what the numbers leave out, <b>how much of the figure stands above the card</b>: 61 mm here.",
-    "Two measurements only: how wide the toploader slot is, and which figure this stand is for. The dropdown <b>starts empty</b> on purpose: a stand is printed for one figure, and a choice the app makes on your behalf is a choice nobody re-reads."
+    "Two measurements: how wide the toploader slot is, and which figure this stand is for. A switch drops the toploader slot, for a figure that stands on its own. The dropdown <b>starts empty</b> on purpose: a stand is printed for one figure, and a choice the app makes on your behalf is a choice nobody re-reads."
   ];
   var unote = $("unote");
   var tabs = [0, 1, 2].map(function (i) { return $("p" + i); });
@@ -322,16 +322,16 @@
             "calibration, folded away under Advanced.",
       notes: [
         [[21, 558, 335, 44], "The cut-out, as a subject of its own."],
-        [[1108, 208, 362, 106], "<b>Long side</b> is the size of the finished part, 150 mm here, and " +
-          "everything else scales with it. <b>Line width</b> is how wide the black lines come out: " +
-          "below 0.8 mm they barely print with a 0.4 mm nozzle."],
-        [[1108, 364, 362, 64], "<b>Ignore colors</b> follows the lines already drawn in the art, " +
-          "which is right for Squirtle. Turn it off for art with no drawn outline, where the lines " +
-          "come from the colour borders. <b>Line art mode</b> is for black strokes on white, like " +
-          "a colouring page."],
-        [[1108, 444, 362, 26], "<b>Advanced</b>: line detail, colour zones, smoothing, and the two " +
-          "switches that keep a print in one piece, <b>Join floating parts</b> and <b>Thicken thin " +
-          "parts</b>. Set once, then left alone."],
+        [[1108, 208, 362, 164], "<b>Height</b> and <b>Width</b> are the size of the finished part, " +
+          "150 &times; 145 mm here. Move one and the other follows: the proportions stay the " +
+          "drawing&rsquo;s. <b>Line width</b> is how wide the black lines come out: below 0.8 mm " +
+          "they barely print with a 0.4 mm nozzle."],
+        [[1108, 422, 362, 64], "Squirtle needs neither switch: the lines already drawn in the art " +
+          "are followed as they are. <b>Line Art Mode</b> is for black strokes on white, like a " +
+          "colouring page. <b>Extra Effort</b> redraws a coloured picture as clean lines first: " +
+          "slower, and worth a try when lines go missing."],
+        [[1108, 502, 362, 26], "<b>Advanced</b>: line detail, smoothing, and <b>Join floating " +
+          "parts</b>, which keeps a print in one piece. Set once, then left alone."],
         [[1000, 169, 73, 33], "The trace is already good as it is. <b>Touch up</b> is where you " +
           "change it by hand: here the lines in the middle of the shell will make room for a " +
           "heart."]
@@ -436,14 +436,16 @@
             "not a subject: it does not count as one during the trial.",
       notes: [
         [[1425, 6, 55, 36], "The <b>Stand</b> page, top right."],
-        [[1218, 100, 252, 50], "<b>Card slot</b>: how wide the toploader slot is. A card in a " +
+        [[1218, 98, 252, 30], "<b>Remove toploader slot</b> is for a figure printed on its own: " +
+          "the stand keeps only the figure slot, and the card settings disappear."],
+        [[1218, 134, 252, 50], "<b>Card slot</b>: how wide the toploader slot is. A card in a " +
           "rigid toploader is 77 mm across."],
-        [[1218, 164, 252, 90], "<b>Figure slot</b>: pick the figure this stand is for. The list " +
+        [[1218, 198, 252, 90], "<b>Figure slot</b>: pick the figure this stand is for. The list " +
           "starts empty on purpose, and the slot comes out 1 mm longer than that figure&rsquo;s " +
           "base."],
-        [[1218, 268, 252, 30], "<b>Raise the figure</b>: the same setting as on the Figure page, " +
+        [[1218, 302, 252, 30], "<b>Raise the figure</b>: the same setting as on the Figure page, " +
           "which cuts the figure slot on a raised plateau behind the card."],
-        [[1218, 316, 252, 106], "Width, depth and height are not set by hand: they follow from the " +
+        [[1218, 350, 252, 106], "Width, depth and height are not set by hand: they follow from the " +
           "two slots."],
         [[21, 63, 1173, 712], "The stand in 3D. Drag to turn it, use the wheel to zoom."]
       ] },
@@ -455,7 +457,7 @@
         [[20, 862, 188, 45], "<b>Generate stand STL</b>."],
         [[615, 62, 271, 66], "<b>Stand_base85.stl</b>: the name carries the base length, so a " +
           "stand and a figure that do not match show at a glance."],
-        [[1218, 644, 252, 46], "The same folder as the figure: <b>Squirtle_cutout</b> now holds " +
+        [[1218, 602, 252, 46], "The same folder as the figure: <b>Squirtle_cutout</b> now holds " +
           "both parts to print."]
       ] },
 
@@ -492,7 +494,11 @@
   var NS = "http://www.w3.org/2000/svg";
   var at = 0, lit = null, pinned = null;
 
-  function src(step) { return step.img ? "assets/tutorial/" + step.img + ".webp" : null; }
+  // Come TURN_V: i riquadri di TOUR sono in pixel delle schermate, e una
+  // schermata vecchia ancora nella cache sotto i riquadri nuovi li mette nel
+  // posto sbagliato. Si alza a ogni `make_tutorial.py`.
+  var TOUR_V = "?v=2";
+  function src(step) { return step.img ? "assets/tutorial/" + step.img + ".webp" + TOUR_V : null; }
 
   // la barra dei capitoli: un segmento per passo, e il capitolo si preme
   var ticks = [];
@@ -716,11 +722,11 @@
 
   /* -------------------------------------------------- acquisto: i piani */
   var picks = $("picks"), go = $("buy-go"), goLabel = $("buy-go-label"), buyMeta = $("buy-meta");
-  var NAMES = { maker: "Maker", commercial: "Commercial" };
+  var NAMES = { pro: "Pro", commercial: "Commercial" };
 
   function chosen() {
     var r = picks.querySelector("input[name=edition]:checked");
-    return r ? r.value : "maker";
+    return r ? r.value : "pro";
   }
   function refreshBuy() {
     var k = chosen(), url = SITE.buy[k];

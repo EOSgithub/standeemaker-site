@@ -160,7 +160,7 @@
       </div>
       <div class="stack">
         <button class="plate tour-poster" type="button" data-tour="0">
-          <img src="assets/tutorial/traced.webp" loading="lazy" alt="The Trace page with Squirtle: the picture on the left, the finished trace on the right">
+          <img src="assets/tutorial/traced.webp?v=2" loading="lazy" alt="The Trace page with Squirtle: the picture on the left, the finished trace on the right">
           <span class="tour-play">
             <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 2.5v11l9-5.5z" fill="currentColor"/></svg>
             Watch the tutorial
@@ -200,10 +200,10 @@
       <div class="plans">
         <div class="plan">
           <div class="plan-head">
-            <span class="plan-name">Maker</span>
+            <span class="plan-name">Pro</span>
             <span class="plan-for">for printing for yourself</span>
           </div>
-          <p class="price"><span class="cur">&euro;</span><span class="fig">19.99</span><span class="once">once</span></p>
+          <p class="price"><span class="cur">&euro;</span><span class="fig">19.99</span><span class="once">once, plus tax</span></p>
           <ul>
             <li><svg class="tick" viewBox="0 0 12 12" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6.5 4.5 10 11 2"/></svg><span>Personal, educational and in-house business use</span></li>
             <li><svg class="tick" viewBox="0 0 12 12" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6.5 4.5 10 11 2"/></svg><span>You may <b>give away</b> the parts you print</span></li>
@@ -218,9 +218,9 @@
             <span class="plan-name">Commercial</span>
             <span class="plan-for">for selling what you print</span>
           </div>
-          <p class="price"><span class="cur">&euro;</span><span class="fig">99.99</span><span class="once">once</span></p>
+          <p class="price"><span class="cur">&euro;</span><span class="fig">99.99</span><span class="once">once, plus tax</span></p>
           <ul>
-            <li><svg class="tick" viewBox="0 0 12 12" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6.5 4.5 10 11 2"/></svg><span>Everything in Maker</span></li>
+            <li><svg class="tick" viewBox="0 0 12 12" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6.5 4.5 10 11 2"/></svg><span>Everything in Pro</span></li>
             <li><svg class="tick" viewBox="0 0 12 12" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6.5 4.5 10 11 2"/></svg><span><b>Sell</b> the parts you print, made to order included</span></li>
             <li><svg class="tick" viewBox="0 0 12 12" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6.5 4.5 10 11 2"/></svg><span>Use them in a business that sells goods or services</span></li>
             <li><svg class="tick" viewBox="0 0 12 12" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 6.5 4.5 10 11 2"/></svg><span>Two computers per licence, movable</span></li>
@@ -236,7 +236,7 @@
           Download the free trial
         </button>
         <button class="btn-line" type="button" data-open="dlg-buy">Buy a licence</button>
-        <p class="fineprint">Free trial, no account &middot; 3 subjects a week for 14 days</p>
+        <p class="fineprint">Free trial, no account &middot; 1 subject a week for 14 days</p>
       </div>
     </div>
   </section>
@@ -251,7 +251,7 @@
           <summary>What can I do with the trial?</summary>
           <div class="answer">Everything. I decided to hold nothing back in the trial: the files come
           out at full size and full quality, <b>with no watermark</b>. The only limits are how many
-          and how long: three new subjects every seven days, and fourteen days after the first
+          and how long: one new subject every seven days, and fourteen days after the first
           run the program stops writing files. If all you mean to print is one stand for your
           favourite card, you don&rsquo;t need anything else.</div>
         </details>
@@ -319,13 +319,14 @@
       full size, full quality, no watermark. What limits you is the number of subjects and the
       days.</p>
       <dl class="terms">
-        <dt>Subjects</dt><dd><b>3 new subjects</b> every 7 days. A subject is one image taken as far
+        <dt>Subjects</dt><dd><b>1 new subject</b> every 7 days. A subject is one image taken as far
         as you like: re-tracing it, touching it up, regenerating it and building its STL is still
         one subject.</dd>
         <dt>Time</dt><dd><b>14 days</b> from the first run; after that the program still opens, but
         stops writing files.</dd>
-        <dt>Use</dt><dd>What you print during the trial is for judging the result: <b>it is not for
-        sale</b>, whichever edition you buy afterwards.</dd>
+        <dt>Use</dt><dd>What you print during the trial is for judging the result: <b>it is not
+        for sale</b> while you are still in the trial. Buy a licence and it covers what you have
+        already made.</dd>
         <dt>Account</dt><dd>None. Nothing is registered and nothing is uploaded.</dd>
       </dl>
       <div class="callout" id="trial-state">
@@ -358,10 +359,10 @@
 
     <div class="dlg-body">
       <form class="picks" id="picks">
-        <label class="pick" for="pick-maker">
-          <input type="radio" name="edition" id="pick-maker" value="maker" checked>
+        <label class="pick" for="pick-pro">
+          <input type="radio" name="edition" id="pick-pro" value="pro" checked>
           <span class="who">
-            <span class="n">Maker</span>
+            <span class="n">Pro</span>
             <span class="w">You print for yourself.</span>
           </span>
           <span class="p">&euro;&nbsp;19.99</span>
@@ -378,11 +379,16 @@
 
       <dl class="terms">
         <dt>How it arrives</dt><dd>A <b>key</b> by email, right after payment. You paste it into the
-        program, under <b>Help &rarr; Licence</b>, and that machine is activated.</dd>
+        program, under <b>Settings &rarr; Licence</b>, and that machine is
+        activated.</dd>
         <dt>Computers</dt><dd>Two per licence. It moves by releasing the activation from inside the
         program.</dd>
         <dt>Tax</dt><dd>Where local tax applies it is added at checkout by the reseller, who also
         issues the invoice.</dd>
+        <dt>Before you pay</dt><dd>The three documents that govern the sale, in full:
+        <a href="legal/licence.html">licence agreement</a>, <a href="legal/terms.html">terms of
+        sale</a> (14&nbsp;days to withdraw, 30&nbsp;days to be refunded) and
+        <a href="legal/privacy.html">privacy</a>.</dd>
       </dl>
 
       <div class="callout">
@@ -393,7 +399,7 @@
 
     <div class="dlg-foot">
       <a class="btn btn-block" id="buy-go" href="#" aria-disabled="true">
-        <span id="buy-go-label">Go to checkout: Maker, &euro;&nbsp;19.99</span>
+        <span id="buy-go-label">Go to checkout: Pro, &euro;&nbsp;19.99</span>
       </a>
       <p class="hint" id="buy-meta">Checkout opens in a new tab.</p>
     </div>
