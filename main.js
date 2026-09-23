@@ -416,7 +416,7 @@
           "4 mm overlap: that is what welds figure and base into one solid instead of two pieces " +
           "that only touch."],
         [[590, 660, 250, 52], "The feet no longer stick out."],
-        [[772, 795, 192, 20], "How much was removed. The base itself stays whole."]
+        [[820, 795, 110, 20], "How much was removed. The base itself stays whole."]
       ],
       tip: "For anything that is not a straight cut, a shadow or a stray mark, use <b>Erase</b> " +
            "(E) and <b>Restore</b> (R) on this same view." },
@@ -424,17 +424,17 @@
     { ch: 3, img: "figure-written", size: SHOT,
       title: "Write the figure STL",
       lede: "The figure comes out as a single STL, already assembled: the silhouette, the line art " +
-            "standing 2.5 mm proud of it, and the base welded underneath. Next to it come two " +
-            ".3mf files with the line art as a second part, for printing it in another colour.",
+            "standing 2.5 mm proud of it, and the base welded underneath.",
       notes: [
         [[20, 862, 191, 45], "<b>Generate figure STL</b>, or <b>Ctrl+Enter</b>."],
         [[612, 62, 277, 66], "<b>Squirtle_cutout.stl is ready to print.</b> Click the notice to " +
           "open its folder."],
-        [[1108, 680, 362, 44], "Every subject gets a folder of its own, and the stand made for it " +
+        [[1108, 688, 362, 46], "Every subject gets a folder of its own, and the stand made for it " +
           "lands in the same one. The gear at the top lets you choose where models go."],
-        [[1108, 726, 362, 22], "Two colours: open <b>_Bambu-Orca.3mf</b> in Bambu Studio or " +
-          "OrcaSlicer, or <b>_Prusa.3mf</b> in PrusaSlicer, and give each part its filament. " +
-          "With a single nozzle, add a filament change at the height shown here."],
+        [[1108, 574, 362, 30], "<b>Multicolor printing</b>, off unless you switch it on: two .3mf " +
+          "files come out as well, with the line art as a second part. Open <b>_Bambu-Orca</b> in " +
+          "Bambu Studio or OrcaSlicer, <b>_Prusa</b> in PrusaSlicer. With a single nozzle, Output " +
+          "then shows the height at which to change filament."],
         [[944, 795, 126, 20], "The size of the part: 145 &times; 151 &times; 10 mm."],
         [[300, 569, 48, 22], "In the library the tag moves on from <b>traced</b> to " +
           "<b>ready</b>: the figure is ready to print."]
@@ -507,7 +507,7 @@
   // Come TURN_V: i riquadri di TOUR sono in pixel delle schermate, e una
   // schermata vecchia ancora nella cache sotto i riquadri nuovi li mette nel
   // posto sbagliato. Si alza a ogni `make_tutorial.py`.
-  var TOUR_V = "?v=4";
+  var TOUR_V = "?v=5";
   function src(step) { return step.img ? "assets/tutorial/" + step.img + ".webp" + TOUR_V : null; }
 
   // la barra dei capitoli: un segmento per passo, e il capitolo si preme
