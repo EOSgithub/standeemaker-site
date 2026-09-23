@@ -12,7 +12,11 @@
   "use strict";
 
   var SITE = {
+    // deploy.py ne fa version.json, che l'app legge per dire che c'e' una
+    // versione nuova: cambiarla qui e' annunciarla. `notes` e' la riga che
+    // l'avviso nell'app mostra sotto il titolo (vuota: una frase generica).
     version: "1.0.0",
+    notes: "",
     trial: {
       // TODO rilascio: URL del setup firmato, dimensione e impronta
       url: null,                    // es. "https://.../Standee Maker Setup 1.0.0.exe"
@@ -420,13 +424,17 @@
     { ch: 3, img: "figure-written", size: SHOT,
       title: "Write the figure STL",
       lede: "The figure comes out as a single STL, already assembled: the silhouette, the line art " +
-            "standing 2.5 mm proud of it, and the base welded underneath.",
+            "standing 2.5 mm proud of it, and the base welded underneath. Next to it come two " +
+            ".3mf files with the line art as a second part, for printing it in another colour.",
       notes: [
         [[20, 862, 191, 45], "<b>Generate figure STL</b>, or <b>Ctrl+Enter</b>."],
         [[612, 62, 277, 66], "<b>Squirtle_cutout.stl is ready to print.</b> Click the notice to " +
           "open its folder."],
-        [[1108, 700, 362, 46], "Every subject gets a folder of its own, and the stand made for it " +
+        [[1108, 680, 362, 44], "Every subject gets a folder of its own, and the stand made for it " +
           "lands in the same one. The gear at the top lets you choose where models go."],
+        [[1108, 726, 362, 22], "Two colours: open <b>_Bambu-Orca.3mf</b> in Bambu Studio or " +
+          "OrcaSlicer, or <b>_Prusa.3mf</b> in PrusaSlicer, and give each part its filament. " +
+          "With a single nozzle, add a filament change at the height shown here."],
         [[944, 795, 126, 20], "The size of the part: 145 &times; 151 &times; 10 mm."],
         [[300, 569, 48, 22], "In the library the tag moves on from <b>traced</b> to " +
           "<b>ready</b>: the figure is ready to print."]
@@ -499,7 +507,7 @@
   // Come TURN_V: i riquadri di TOUR sono in pixel delle schermate, e una
   // schermata vecchia ancora nella cache sotto i riquadri nuovi li mette nel
   // posto sbagliato. Si alza a ogni `make_tutorial.py`.
-  var TOUR_V = "?v=3";
+  var TOUR_V = "?v=4";
   function src(step) { return step.img ? "assets/tutorial/" + step.img + ".webp" + TOUR_V : null; }
 
   // la barra dei capitoli: un segmento per passo, e il capitolo si preme
@@ -720,6 +728,13 @@
       (SITE.trial.sha256 ? " &middot; SHA-256 " + SITE.trial.sha256 : "");
   } else {
     dl.addEventListener("click", function (e) { e.preventDefault(); });
+  }
+  // #download apre subito questa finestra: e' l'indirizzo a cui l'app manda
+  // chi ha visto l'avviso di una versione nuova (vedi updates.py). Deve
+  // continuare a esistere, come #tutorial e #pricing.
+  var trialDlg = $("dlg-trial");
+  if (location.hash === "#download" && trialDlg && typeof trialDlg.showModal === "function") {
+    trialDlg.showModal();
   }
 
   /* -------------------------------------------------- acquisto: i piani */
