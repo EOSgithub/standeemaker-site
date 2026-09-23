@@ -427,7 +427,9 @@
           "open its folder."],
         [[1108, 700, 362, 46], "Every subject gets a folder of its own, and the stand made for it " +
           "lands in the same one. The gear at the top lets you choose where models go."],
-        [[944, 795, 126, 20], "The size of the part: 145 &times; 151 &times; 10 mm."]
+        [[944, 795, 126, 20], "The size of the part: 145 &times; 151 &times; 10 mm."],
+        [[300, 569, 48, 22], "In the library the tag moves on from <b>traced</b> to " +
+          "<b>ready</b>: the figure is ready to print."]
       ] },
 
     { ch: 4, img: "stand", size: SHOT,
@@ -497,7 +499,7 @@
   // Come TURN_V: i riquadri di TOUR sono in pixel delle schermate, e una
   // schermata vecchia ancora nella cache sotto i riquadri nuovi li mette nel
   // posto sbagliato. Si alza a ogni `make_tutorial.py`.
-  var TOUR_V = "?v=2";
+  var TOUR_V = "?v=3";
   function src(step) { return step.img ? "assets/tutorial/" + step.img + ".webp" + TOUR_V : null; }
 
   // la barra dei capitoli: un segmento per passo, e il capitolo si preme
