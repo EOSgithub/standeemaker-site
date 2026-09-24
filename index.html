@@ -78,14 +78,14 @@
         <div class="stage" id="stage">
           <div class="stage-in">
             <img class="on" id="h0" src="assets/source.webp" alt="The starting image: a colour character on a transparent background">
-            <img id="h1" src="assets/trace/line_0_9.svg" alt="The two SVGs overlaid: silhouette in grey, line art in black">
+            <img id="h1" src="assets/trace/kelpurr.svg" alt="The two SVGs overlaid: silhouette in grey, line art in black">
             <div class="turn-box" id="h2" tabindex="0" role="slider" aria-label="Turn the part"
                  aria-valuemin="0" aria-valuemax="29" aria-valuenow="0">
-              <img id="turn-img" src="assets/turn/t00.webp?v=2" draggable="false" alt="The finished part, figure slotted into its stand next to the empty toploader, seen from one side">
+              <img id="turn-img" src="assets/turn/t00.webp?v=3" draggable="false" alt="The finished part, figure slotted into its stand next to the empty toploader, seen from one side">
               <span class="turn-tag" id="turn-tag">Drag to turn it</span>
             </div>
           </div>
-          <p class="caption" id="cap"><b>Chopper_cutout</b><span>image &middot; 604 &times; 799 px</span></p>
+          <p class="caption" id="cap"><b>Kelpurr</b><span>image &middot; 821 &times; 668 px</span></p>
         </div>
       </div>
     </div>
@@ -136,7 +136,7 @@
           <h3>Remove background</h3>
           <p class="note">The wand takes the background by colour, the box says where the subject is,
           the two brushes fix the rest by hand. Here it is <b>two clicks</b>: the background, and the
-          pocket closed between the wing and the tail, which would otherwise stay.</p>
+          pocket closed between two fins, which would otherwise stay.</p>
         </div>
         <div>
           <div class="plate"><img src="assets/ui/retouch.webp" loading="lazy" alt="The Touch up window: eraser and pencil on the line art just traced"></div>
@@ -153,14 +153,14 @@
     <div class="stack-l">
       <p class="eyebrow">Tutorial</p>
       <div class="stack">
-        <h2>One Squirtle, from the image to the painted stand</h2>
+        <h2>One Kelpurr, from the image to the finished stand</h2>
         <p>Every step in the real program, on a real subject: the image goes in on a white
         background and comes out as a figure standing next to its card. Nothing is skipped,
         <em>the touch-ups included</em>, and every screen is marked where to look.</p>
       </div>
       <div class="stack">
         <button class="plate tour-poster" type="button" data-tour="0">
-          <img src="assets/tutorial/traced.webp?v=2" loading="lazy" alt="The Trace page with Squirtle: the picture on the left, the finished trace on the right">
+          <img src="assets/tutorial/traced.webp?v=7" loading="lazy" alt="The Trace page with Kelpurr: the picture on the left, the finished trace on the right">
           <span class="tour-play">
             <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5 2.5v11l9-5.5z" fill="currentColor"/></svg>
             Watch the tutorial
@@ -174,14 +174,13 @@
   <!-- =============================================================== esempi -->
   <section id="examples">
     <div class="stack-l">
-      <p class="eyebrow">Twelve subjects, no touch-ups</p>
+      <p class="eyebrow">Four subjects, no touch-ups</p>
       <div class="stack">
         <h2>Taken from the library and traced as they were</h2>
         <p>All of them on the starting values, none corrected by hand. Drag the amber line to
         uncover the trace under the image.</p>
       </div>
       <div class="grid" id="grid"></div>
-      <div><button class="btn btn-ghost" type="button" id="more">Show all twelve</button></div>
     </div>
   </section>
 
@@ -415,7 +414,7 @@
     <div class="dlg-head">
       <div class="titles">
         <h2 id="tour-h">Tutorial</h2>
-        <p class="sub" id="tour-sub">Step 1 of 16</p>
+        <p class="sub" id="tour-sub">Step 1 of 6</p>
       </div>
       <button class="dlg-x" type="button" data-close aria-label="Close">&times;</button>
     </div>
@@ -444,7 +443,7 @@
         <svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M10 3 5 8l5 5"/></svg>
         Back
       </button>
-      <span class="tour-count" id="tour-count" aria-live="polite">1 / 16</span>
+      <span class="tour-count" id="tour-count" aria-live="polite">1 / 6</span>
       <button class="btn" type="button" id="tour-next">
         <span id="tour-next-label">Next</span>
         <svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m6 3 5 5-5 5"/></svg>

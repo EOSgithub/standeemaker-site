@@ -351,8 +351,6 @@ section{padding-block:62px 0}
 .cmp-tag.l{left:6px}
 .cmp-tag.r{right:6px}
 .cmp figcaption{margin-top:7px;font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);letter-spacing:.04em}
-.hidden-row{display:none}
-.grid.all .hidden-row{display:block}
 
 /* ---------------------------------------------------------------- prezzi */
 .plans{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;align-items:stretch}
@@ -633,7 +631,7 @@ dialog.tour{
 /* ------------------------------------------------------------- responsive */
 @media (max-width:980px){
   .facts{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media (max-width:860px){
   .chain,.two,.plans{grid-template-columns:minmax(0,1fr);gap:26px}
