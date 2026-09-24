@@ -38,7 +38,7 @@
   var CAPS = [
     ["Kelpurr", "image &middot; 821 &times; 668 px"],
     ["Kelpurr_silhouette.svg  +  _lineart.svg", "150 &times; 121 mm"],
-    ["Kelpurr.stl  +  Stand_base85_rise30.stl", "31,476 + 212 triangles"]
+    ["Kelpurr.stl  +  Stand_base85_rise30.stl", "33,304 + 212 triangles"]
   ];
   var cap = $("cap");
   var steps = [0, 1, 2].map(function (i) { return $("s" + i); });
@@ -73,7 +73,7 @@
   // riscarica e le altre no, e il pezzo cambiava aspetto girandolo. Questo
   // numero si alza a ogni `make_turn.py`, e la copia vecchia non viene piu'
   // chiesta. Va tenuto uguale al `?v=` dell'immagine nella pagina.
-  var TURN_V = "?v=3";
+  var TURN_V = "?v=4";
   var turnBox = $("h2"), turnImg = $("turn-img"), turnTag = $("turn-tag");
   var turnSrc = function (i) { return "assets/turn/t" + (i < 10 ? "0" : "") + i + ".webp" + TURN_V; };
   var turnAt = 0, turnAcc = 0, turnDrag = null, turnLoaded = false;
@@ -328,10 +328,10 @@
           "150 &times; 121 mm here. Move one and the other follows: the proportions stay the " +
           "drawing&rsquo;s. <b>Line width</b> is how wide the black lines come out: below 0.8 mm " +
           "they barely print with a 0.4 mm nozzle."],
-        [[1108, 422, 362, 64], "Kelpurr needs neither switch: the lines already drawn in the art " +
-          "are followed as they are. <b>Line Art Mode</b> is for black strokes on white, like a " +
-          "colouring page. <b>Extra Effort</b> redraws a coloured picture as clean lines first: " +
-          "slower, and worth a try when lines go missing."],
+        [[1108, 422, 362, 64], "<b>Extra Effort</b> is on: it redraws a coloured picture as clean " +
+          "lines first, and only then traces them. Slower, and on a drawing like Kelpurr the lines " +
+          "come out steadier. <b>Line Art Mode</b> is the other switch, for black strokes on " +
+          "white like a colouring page: one or the other, never both."],
         [[1108, 502, 362, 26], "<b>Advanced</b>: line detail, smoothing, and <b>Join floating " +
           "parts</b>, which keeps a print in one piece. Set once, then left alone."],
         [[1000, 169, 73, 33], "The trace is already good as it is. <b>Touch up</b> is where you " +
@@ -348,7 +348,7 @@
         [[15, 11, 39, 33], "<b>Erase</b> (E) removes line art under the brush."],
         [[225, 12, 370, 30], "The diameter is given in millimetres of the finished part, not just " +
           "in pixels: you can tell how big the stroke really is."],
-        [[826, 404, 52, 58], "One stroke along the short crack in the middle of the big fin, " +
+        [[826, 385, 56, 77], "One stroke along the short crack in the middle of the big fin, " +
           "on the right. What is about to go turns red."],
         [[268, 832, 110, 24], "A running total of what you have removed, in mm&sup2;."]
       ],
@@ -360,8 +360,9 @@
       lede: "Where the crack was, the pencil draws a heart. New ink is traced exactly like the rest " +
             "of the drawing, and prints in relief the same way.",
       notes: [
-        [[54, 11, 39, 33], "<b>Draw</b> (D) adds line art where the trace missed it. Below 0.8 mm " +
-          "the readout warns that the stroke is too thin. New ink stops at the edge of the " +
+        [[54, 11, 39, 33], "<b>Draw</b> (D) adds line art where the trace missed it. The heart " +
+          "is drawn at 0.9 mm, the same width as the traced lines; below 0.8 mm the readout warns " +
+          "that the stroke is too thin. New ink stops at the edge of the " +
           "silhouette: outside it, it would hang in mid-air."],
         [[816, 432, 72, 66], "The heart, in green until you apply it."],
         [[93, 11, 117, 33], "The other three tools. <b>Restore</b> (R) brings back what was traced " +
@@ -495,7 +496,7 @@
   // Come TURN_V: i riquadri di TOUR sono in pixel delle schermate, e una
   // schermata vecchia ancora nella cache sotto i riquadri nuovi li mette nel
   // posto sbagliato. Si alza a ogni `make_tutorial.py`.
-  var TOUR_V = "?v=7";
+  var TOUR_V = "?v=8";
   function src(step) { return step.img ? "assets/tutorial/" + step.img + ".webp" + TOUR_V : null; }
 
   // la barra dei capitoli: un segmento per passo, e il capitolo si preme
