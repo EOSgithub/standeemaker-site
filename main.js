@@ -136,7 +136,7 @@
   // deve leggerla lo stesso. Le due devono restare uguali.
   var NOTES = [
     "The image on the left, what comes out of it on the right, at the same height.",
-    "You work face-on, in 2D, and that is not a simplification: the part is an extrusion, so seen from the front it hides nothing. The little drawing at the top right answers what the numbers leave out, <b>how much of the figure stands above the card</b>: 61 mm here.",
+    "You work face-on, in 2D, and that is not a simplification: the part is an extrusion, so seen from the front it hides nothing. The little drawing at the top right answers what the numbers leave out, <b>how much of the figure stands above the card</b>: 57 mm here. The base sits on the figure&rsquo;s centre of gravity, a little higher and a little longer than it starts, so that it takes in both hooves on the ground.",
     "Two measurements: how wide the toploader slot is, and which figure this stand is for. A switch drops the toploader slot, for a figure that stands on its own. The dropdown <b>starts empty</b> on purpose: a stand is printed for one figure, and a choice the app makes on your behalf is a choice nobody re-reads."
   ];
   var unote = $("unote");
@@ -396,21 +396,32 @@
             "an extrusion: from the front it hides nothing.",
       notes: [
         [[469, 125, 80, 26], "Step 2, <b>Figure</b>. <b>Ctrl+Tab</b> gets here from the keyboard."],
-        [[565, 690, 372, 45], "The base, hatched in blue. It starts centred under the silhouette, " +
-          "just inside its lowest point."],
+        [[565, 679, 372, 45], "The base, hatched in blue. It starts centred on the silhouette, " +
+          "just inside its lowest point: here the front foot, while the hind foot on the right " +
+          "barely touches it. Nudged up by 4 mm, it takes in both."],
+        [[386, 169, 39, 33], "<b>Move base</b> (M): drag the base where it belongs."],
         [[1108, 412, 362, 105], "<b>Base length</b> should span the two outermost feet. Houndivolt " +
-          "stands wide, and at the 85 mm it starts from the hind feet would stick out past the " +
-          "ends: 130 mm reaches them all. <b>Raise the figure</b> stays at zero, because a tall " +
-          "subject already clears the card."],
+          "stands wide, and at the 85 mm it starts from the feet would stick out past the ends: " +
+          "130 mm reaches them all. <b>Raise the figure</b> stays at zero, because a tall subject " +
+          "already clears the card."],
         [[1108, 165, 362, 230], "The drawing to scale answers what the numbers leave out: <b>how " +
-          "much of the figure stands above the card</b> in its toploader. 59 mm here."],
-        [[386, 169, 39, 33], "<b>Move base</b> (M), if you want it somewhere else: drag it where " +
-          "it belongs."],
-        [[385, 787, 129, 34], "<b>Cut below the base</b> removes whatever hangs underneath, which " +
-          "would print as loose bits under the stand."],
+          "much of the figure stands above the card</b> in its toploader. 55 mm here."],
         [[1108, 566, 362, 26], "<b>Advanced</b>: how thick the silhouette and the line art come " +
           "out, and <b>Base height</b>, 10 mm inside the slot plus what stays in sight. Set once, " +
           "then left alone."]
+      ],
+      tip: "Everything above the base stays as it is: the base goes up, the figure does not move." },
+
+    { ch: 3, img: "figure-cut", size: SHOT,
+      title: "Cut below the base",
+      lede: "With the base higher, the front foot now pokes out underneath: it would print as a " +
+            "loose bit sticking out under the stand. One button takes it away.",
+      notes: [
+        [[385, 787, 129, 34], "<b>Cut below the base</b> removes everything underneath, except a " +
+          "4 mm overlap: that is what welds figure and base into one solid instead of two pieces " +
+          "that only touch."],
+        [[565, 679, 372, 45], "Nothing hangs below the base any more."],
+        [[862, 795, 100, 20], "How much was removed: 77 mm&sup2;. The base itself stays whole."]
       ],
       tip: "For anything that is not a straight cut, a shadow or a stray mark, use <b>Erase</b> " +
            "(E) and <b>Restore</b> (R) on this same view." },
@@ -429,7 +440,7 @@
           "files come out as well, with the line art as a second part. Open <b>_Bambu-Orca</b> in " +
           "Bambu Studio or OrcaSlicer, <b>_Prusa</b> in PrusaSlicer. With a single nozzle, Output " +
           "then shows the height at which to change filament."],
-        [[944, 795, 126, 20], "The size of the part: 150 &times; 158 &times; 10 mm, base included."],
+        [[944, 795, 126, 20], "The size of the part: 150 &times; 154 &times; 10 mm, base included."],
         [[300, 261, 48, 22], "In the library the tag moves on from <b>traced</b> to " +
           "<b>ready</b>: the figure is ready to print."]
       ] },
@@ -501,7 +512,7 @@
   // Come TURN_V: i riquadri di TOUR sono in pixel delle schermate, e una
   // schermata vecchia ancora nella cache sotto i riquadri nuovi li mette nel
   // posto sbagliato. Si alza a ogni `make_tutorial.py`.
-  var TOUR_V = "?v=9";
+  var TOUR_V = "?v=10";
   function src(step) { return step.img ? "assets/tutorial/" + step.img + ".webp" + TOUR_V : null; }
 
   // la barra dei capitoli: un segmento per passo, e il capitolo si preme
