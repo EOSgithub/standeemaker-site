@@ -60,7 +60,7 @@
       steps[n].focus(); showStep(n);
     });
   });
-  showStep(0);
+  showStep(2);                               // si parte dal pezzo finito: e' quello che si viene a vedere
 
   /* ------------------------------------------- il pezzo: girarlo a mano */
   // Trenta viste del pezzo, una ogni 12 gradi. Si gira trascinando, con lo

@@ -60,7 +60,7 @@
           feet.</p>
 
           <div class="steps" role="tablist" aria-label="States of the part">
-            <button class="step" role="tab" id="s0" aria-selected="true" aria-controls="stage">
+            <button class="step" role="tab" id="s0" aria-selected="false" aria-controls="stage">
               <span class="n">01</span><span class="t">The image</span>
               <span class="d">An image dropped into the library. Transparent background or not, that gets sorted later.</span>
             </button>
@@ -68,7 +68,7 @@
               <span class="n">02</span><span class="t">The two outlines</span>
               <span class="d">Silhouette and line art, in two files, overlaid the way the app shows them.</span>
             </button>
-            <button class="step" role="tab" id="s2" aria-selected="false" aria-controls="stage">
+            <button class="step" role="tab" id="s2" aria-selected="true" aria-controls="stage">
               <span class="n">03</span><span class="t">The part</span>
               <span class="d">One STL for the figure, one for the block.</span>
             </button>
@@ -77,15 +77,15 @@
 
         <div class="stage" id="stage">
           <div class="stage-in">
-            <img class="on" id="h0" src="assets/source.webp" alt="The starting image: a colour character on a transparent background">
+            <img id="h0" src="assets/source.webp" alt="The starting image: a colour character on a transparent background">
             <img id="h1" src="assets/trace/kelpurr.svg" alt="The two SVGs overlaid: silhouette in grey, line art in black">
-            <div class="turn-box" id="h2" tabindex="0" role="slider" aria-label="Turn the part"
+            <div class="turn-box on" id="h2" tabindex="0" role="slider" aria-label="Turn the part"
                  aria-valuemin="0" aria-valuemax="29" aria-valuenow="0">
               <img id="turn-img" src="assets/turn/t00.webp?v=4" draggable="false" alt="The finished part, figure slotted into its stand next to the empty toploader, seen from one side">
               <span class="turn-tag" id="turn-tag">Drag to turn it</span>
             </div>
           </div>
-          <p class="caption" id="cap"><b>Kelpurr</b><span>image &middot; 821 &times; 668 px</span></p>
+          <p class="caption" id="cap"><b>Kelpurr.stl  +  Stand_base85_rise30.stl</b><span>33,304 + 212 triangles</span></p>
         </div>
       </div>
     </div>
@@ -153,7 +153,7 @@
     <div class="stack-l">
       <p class="eyebrow">Tutorial</p>
       <div class="stack">
-        <h2>One Houndivolt, from the image to the printed stand</h2>
+        <h2>From the image to the printed stand</h2>
         <p>Every step in the real program, on a real subject: the image goes in on a white
         background and comes out as a figure standing next to its card. Nothing is skipped,
         <em>the touch-ups included</em>, and every screen is marked where to look.</p>
