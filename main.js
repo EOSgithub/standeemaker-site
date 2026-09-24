@@ -136,7 +136,7 @@
   // deve leggerla lo stesso. Le due devono restare uguali.
   var NOTES = [
     "The image on the left, what comes out of it on the right, at the same height.",
-    "You work face-on, in 2D, and that is not a simplification: the part is an extrusion, so seen from the front it hides nothing. The little drawing at the top right answers what the numbers leave out, <b>how much of the figure stands above the card</b>: 62 mm here, with the figure raised by 30.",
+    "You work face-on, in 2D, and that is not a simplification: the part is an extrusion, so seen from the front it hides nothing. The little drawing at the top right answers what the numbers leave out, <b>how much of the figure stands above the card</b>: 61 mm here.",
     "Two measurements: how wide the toploader slot is, and which figure this stand is for. A switch drops the toploader slot, for a figure that stands on its own. The dropdown <b>starts empty</b> on purpose: a stand is printed for one figure, and a choice the app makes on your behalf is a choice nobody re-reads."
   ];
   var unote = $("unote");
@@ -252,7 +252,7 @@
     { ch: 0, img: "library", size: SHOT,
       title: "Add the image",
       lede: "Everything starts from the library, on the left of the <b>Subject</b> page. The " +
-            "picture for this tutorial is Kelpurr, a creature made of kelp, on a plain white " +
+            "picture for this tutorial is Houndivolt, an armoured beast, on a plain white " +
             "background: the kind of image you save from anywhere.",
       notes: [
         [[1367, 64, 113, 35], "<b>Add image&hellip;</b> opens the file picker. Drawings, renders and " +
@@ -261,18 +261,19 @@
         [[20, 64, 1335, 34], "The filter narrows the list as you type. <b>Ctrl+F</b> jumps straight " +
           "into it, which matters once the library holds hundreds of subjects."],
         [[21, 117, 335, 714], "The library: one row per subject, with its thumbnail. Pick a row and " +
-          "it is the subject for every step that follows."]
+          "it is the subject for every step that follows."],
+        [[1108, 462, 362, 30], "<b>Extra Effort</b>, switched on once: it stays on for every " +
+          "subject that follows. More on it in step 3."]
       ],
       tip: "Images, SVGs and STLs are kept in <b>Documents\\Standee Maker</b>, not in the program " +
            "folder: uninstalling does not take your work with it." },
 
     { ch: 0, img: "added", size: SHOT,
       title: "Pick it and look",
-      lede: "Picking the row loads the image and traces a preview straight away, before you have " +
-            "touched a single setting. The two panels share the same height: the right one is " +
-            "what the left one will become.",
+      lede: "Picking the row loads the image and traces a preview straight away. The two panels " +
+            "share the same height: the right one is what the left one will become.",
       notes: [
-        [[21, 250, 335, 44], "Kelpurr, now in the library and selected."],
+        [[21, 206, 335, 44], "Houndivolt, now in the library and selected."],
         [[373, 159, 355, 630], "The image as it is, still on its white background."],
         [[729, 159, 355, 630], "The live preview: <b>silhouette in grey, line art in black</b>. " +
           "Every setting you change redraws it."],
@@ -282,11 +283,11 @@
       ] },
 
     { ch: 1, img: "cutout-wand", size: BOARD,
-      title: "Two clicks with the wand",
+      title: "Three clicks with the wand",
       lede: "The window works on a copy of the image. The <b>wand</b> removes the connected area " +
             "of similar colour around the point you click: one click on the white, and the whole " +
-            "background is marked. Almost: the white showing between two fins is not connected " +
-            "to it, so it takes a click of its own.",
+            "background is marked. Almost: the white showing between the legs is not connected " +
+            "to it, and each pocket takes a click of its own.",
       notes: [
         [[15, 11, 39, 33], "<b>Wand</b> (W). Beside it: <b>Box</b> (B), a rectangle drawn around the " +
           "subject that finds the background inside it on its own, which is the tool for photos; " +
@@ -294,11 +295,12 @@
         [[186, 12, 290, 30], "<b>Tolerance</b>: how far a colour may drift from the one you clicked. " +
           "Move it after the click and the click is redone with the new value, so you set it by " +
           "watching."],
-        [["click", 158, 74], "The first click, on the white around the subject."],
-        [["click", 772, 337], "The second, on the white pocket between the two fins on the " +
-          "right: closed all round, the first click could not reach it."],
+        [["click", 226, 73], "The first click, on the white around the subject."],
+        [["click", 692, 576], "The second, on the white between the two front legs: closed all " +
+          "round, the first click could not reach it."],
+        [["click", 763, 447], "The third, on the small gap behind the knee."],
         [[268, 832, 270, 24], "Red is what goes, green is what you kept by hand. The count says how " +
-          "much of the picture is being removed: 70% here."]
+          "much of the picture is being removed: 64% here."]
       ],
       tip: "The wheel zooms under the pointer, the right button pans, <b>Ctrl+Z</b> undoes. A " +
            "<b>Keep</b> stroke also works as a fence: the wand does not cross it." },
@@ -309,34 +311,33 @@
       notes: [
         [[572, 15, 94, 26], "<b>Show result</b> swaps the red veil for the transparency " +
           "chequerboard."],
-        [[150, 66, 880, 730], "Check the edges and the closed pockets, like the one between the " +
-          "fins: the wand only takes what is connected to the click, so a pocket needs a click of " +
+        [[220, 66, 742, 730], "Check the edges and the closed pockets, like the ones between the " +
+          "legs: the wand only takes what is connected to the click, so a pocket needs a click of " +
           "its own, and a missed one would print as a solid patch."],
         [[1021, 822, 145, 45], "Saving adds the cut-out to the library as a new image, " +
-          "<b>Kelpurr_cutout</b>, next to the original, which is left exactly as it was, and " +
+          "<b>Houndivolt_cutout</b>, next to the original, which is left exactly as it was, and " +
           "picks it for you."]
       ] },
 
     { ch: 2, img: "trace", size: SHOT,
       title: "Size and line source",
-      lede: "After saving, <b>Kelpurr_cutout</b> is already picked and traced. The column on the " +
-            "right holds the few settings you decide for every subject; everything else is " +
+      lede: "After saving, <b>Houndivolt_cutout</b> is already picked and traced. The column on " +
+            "the right holds the few settings you decide for every subject; everything else is " +
             "calibration, folded away under Advanced.",
       notes: [
-        [[21, 294, 335, 44], "The cut-out, as a subject of its own."],
+        [[21, 250, 335, 44], "The cut-out, as a subject of its own."],
         [[1108, 208, 362, 164], "<b>Height</b> and <b>Width</b> are the size of the finished part, " +
-          "150 &times; 121 mm here. Move one and the other follows: the proportions stay the " +
+          "150 &times; 148 mm here. Move one and the other follows: the proportions stay the " +
           "drawing&rsquo;s. <b>Line width</b> is how wide the black lines come out: below 0.8 mm " +
           "they barely print with a 0.4 mm nozzle."],
         [[1108, 422, 362, 64], "<b>Extra Effort</b> is on: it redraws a coloured picture as clean " +
-          "lines first, and only then traces them. Slower, and on a drawing like Kelpurr the lines " +
-          "come out steadier. <b>Line Art Mode</b> is the other switch, for black strokes on " +
+          "lines first, and only then traces them. Slower, and on a drawing like this one the " +
+          "lines come out steadier. <b>Line Art Mode</b> is the other switch, for black strokes on " +
           "white like a colouring page: one or the other, never both."],
         [[1108, 502, 362, 26], "<b>Advanced</b>: line detail, smoothing, and <b>Join floating " +
           "parts</b>, which keeps a print in one piece. Set once, then left alone."],
         [[1000, 169, 73, 33], "The trace is already good as it is. <b>Touch up</b> is where you " +
-          "change it by hand: here a crack in the middle of the big fin will make room for a " +
-          "heart."]
+          "change it by hand: here a stray mark goes, and a heart goes on the neck."]
       ],
       tip: "Point at any control and the line at the bottom of the column says what it changes." },
 
@@ -348,8 +349,8 @@
         [[15, 11, 39, 33], "<b>Erase</b> (E) removes line art under the brush."],
         [[225, 12, 370, 30], "The diameter is given in millimetres of the finished part, not just " +
           "in pixels: you can tell how big the stroke really is."],
-        [[826, 385, 56, 77], "One stroke along the short crack in the middle of the big fin, " +
-          "on the right. What is about to go turns red."],
+        [[423, 595, 32, 24], "A short dash floating on the front leg, a patch of shading read as a " +
+          "line. One stroke, and it turns red: it is about to go."],
         [[268, 832, 110, 24], "A running total of what you have removed, in mm&sup2;."]
       ],
       tip: "Hold <b>Shift</b> for a straight stroke. <b>[</b> and <b>]</b> shrink and grow the " +
@@ -357,14 +358,14 @@
 
     { ch: 2, img: "touchup-draw", size: BOARD,
       title: "Draw something new",
-      lede: "Where the crack was, the pencil draws a heart. New ink is traced exactly like the rest " +
-            "of the drawing, and prints in relief the same way.",
+      lede: "On the neck, the pencil draws a heart. New ink is traced exactly like the rest of the " +
+            "drawing, and prints in relief the same way.",
       notes: [
         [[54, 11, 39, 33], "<b>Draw</b> (D) adds line art where the trace missed it. The heart " +
           "is drawn at 0.9 mm, the same width as the traced lines; below 0.8 mm the readout warns " +
-          "that the stroke is too thin. New ink stops at the edge of the " +
-          "silhouette: outside it, it would hang in mid-air."],
-        [[816, 432, 72, 66], "The heart, in green until you apply it."],
+          "that the stroke is too thin. New ink stops at the edge of the silhouette: outside it, " +
+          "it would hang in mid-air."],
+        [[464, 247, 62, 58], "The heart, in green until you apply it."],
         [[93, 11, 117, 33], "The other three tools. <b>Restore</b> (R) brings back what was traced " +
           "under the brush. <b>Hollow</b> (H) cuts a closed area out of the silhouette in one " +
           "click. <b>Outline</b> (O) empties a solid black patch and keeps only its rim."],
@@ -374,38 +375,39 @@
 
     { ch: 2, img: "traced", size: SHOT,
       title: "Trace to SVG",
-      lede: "The preview now shows the heart on the fin. <b>Trace to SVG</b> writes the two files, " +
-            "silhouette and line art, with the same bounding box, so they sit exactly on top of " +
-            "each other.",
+      lede: "The preview now shows the heart on the neck. <b>Trace to SVG</b> writes the two " +
+            "files, silhouette and line art, with the same bounding box, so they sit exactly on " +
+            "top of each other.",
       notes: [
-        [[983, 469, 36, 32], "The heart, now part of the trace."],
+        [[848, 391, 32, 30], "The heart, now part of the trace."],
         [[986, 169, 87, 33], "The green dot on <b>Touch up</b> says this subject carries edits " +
           "made by hand."],
         [[20, 862, 145, 45], "<b>Trace to SVG</b>, or <b>Ctrl+Enter</b>. The big button always does " +
           "the job of the step you are on."],
         [[635, 62, 231, 66], "The notice confirms the two SVGs and goes away by itself after five " +
           "seconds. Click it to open the folder."],
-        [[296, 305, 52, 22], "In the library the subject is now tagged <b>traced</b>."]
+        [[296, 261, 52, 22], "In the library the subject is now tagged <b>traced</b>."]
       ] },
 
-    { ch: 3, img: "figure-raised", size: SHOT,
+    { ch: 3, img: "figure", size: SHOT,
       title: "Put the figure on its base",
       lede: "Switch to <b>Figure</b>. The two SVGs are extruded and mounted on a base, the strip " +
             "that joins the feet and slides into the stand. You work face-on, because the part is " +
             "an extrusion: from the front it hides nothing.",
       notes: [
         [[469, 125, 80, 26], "Step 2, <b>Figure</b>. <b>Ctrl+Tab</b> gets here from the keyboard."],
-        [[633, 679, 281, 50], "The base, hatched in blue. It starts centred under the silhouette, " +
-          "just inside its lowest point: here the curl of the tail rests on it."],
+        [[565, 690, 372, 45], "The base, hatched in blue. It starts centred under the silhouette, " +
+          "just inside its lowest point."],
+        [[1108, 412, 362, 105], "<b>Base length</b> should span the two outermost feet. Houndivolt " +
+          "stands wide, and at the 85 mm it starts from the hind feet would stick out past the " +
+          "ends: 130 mm reaches them all. <b>Raise the figure</b> stays at zero, because a tall " +
+          "subject already clears the card."],
+        [[1108, 165, 362, 230], "The drawing to scale answers what the numbers leave out: <b>how " +
+          "much of the figure stands above the card</b> in its toploader. 59 mm here."],
         [[386, 169, 39, 33], "<b>Move base</b> (M), if you want it somewhere else: drag it where " +
           "it belongs."],
-        [[1108, 165, 362, 230], "The drawing to scale answers what the numbers leave out: <b>how " +
-          "much of the figure stands above the card</b> in its toploader. Kelpurr is wide and " +
-          "low, and on a flat stand the card would hide most of it: only 32 mm would show."],
-        [[1108, 412, 362, 105], "So <b>Raise the figure</b> goes to 30 mm, and 62 mm show. " +
-          "<b>Base length</b> should span the two outermost feet."],
         [[385, 787, 129, 34], "<b>Cut below the base</b> removes whatever hangs underneath, which " +
-          "would print as loose bits under the stand. Here there is nothing to cut."],
+          "would print as loose bits under the stand."],
         [[1108, 566, 362, 26], "<b>Advanced</b>: how thick the silhouette and the line art come " +
           "out, and <b>Base height</b>, 10 mm inside the slot plus what stays in sight. Set once, " +
           "then left alone."]
@@ -419,7 +421,7 @@
             "standing 2.5 mm proud of it, and the base welded underneath.",
       notes: [
         [[20, 862, 191, 45], "<b>Generate figure STL</b>, or <b>Ctrl+Enter</b>."],
-        [[612, 62, 277, 66], "<b>Kelpurr_cutout.stl is ready to print.</b> Click the notice to " +
+        [[604, 62, 293, 66], "<b>Houndivolt_cutout.stl is ready to print.</b> Click the notice to " +
           "open its folder."],
         [[1108, 688, 362, 46], "Every subject gets a folder of its own, and the stand made for it " +
           "lands in the same one. The gear at the top lets you choose where models go."],
@@ -427,8 +429,8 @@
           "files come out as well, with the line art as a second part. Open <b>_Bambu-Orca</b> in " +
           "Bambu Studio or OrcaSlicer, <b>_Prusa</b> in PrusaSlicer. With a single nozzle, Output " +
           "then shows the height at which to change filament."],
-        [[944, 795, 126, 20], "The size of the part: 150 &times; 132 &times; 10 mm, base included."],
-        [[300, 305, 48, 22], "In the library the tag moves on from <b>traced</b> to " +
+        [[944, 795, 126, 20], "The size of the part: 150 &times; 158 &times; 10 mm, base included."],
+        [[300, 261, 48, 22], "In the library the tag moves on from <b>traced</b> to " +
           "<b>ready</b>: the figure is ready to print."]
       ] },
 
@@ -438,18 +440,18 @@
             "not a subject: it does not count as one during the trial.",
       notes: [
         [[1425, 6, 55, 36], "The <b>Stand</b> page, top right."],
-        [[1218, 98, 252, 30], "<b>Remove toploader slot</b> is for a figure printed on its own: " +
+        [[1202, 98, 268, 30], "<b>Remove toploader slot</b> is for a figure printed on its own: " +
           "the stand keeps only the figure slot, and the card settings disappear."],
-        [[1218, 134, 252, 50], "<b>Card slot</b>: how wide the toploader slot is. A card in a " +
+        [[1202, 134, 268, 50], "<b>Card slot</b>: how wide the toploader slot is. A card in a " +
           "rigid toploader is 77 mm across."],
-        [[1218, 198, 252, 95], "<b>Figure slot</b>: pick the figure this stand is for. The list " +
+        [[1202, 198, 268, 95], "<b>Figure slot</b>: pick the figure this stand is for. The list " +
           "starts empty on purpose, and the slot comes out 1 mm longer than that figure&rsquo;s " +
-          "base."],
-        [[1218, 305, 252, 85], "<b>Raise the figure</b>: the same setting as on the Figure page, " +
-          "already at 30 mm. The figure slot sits on a raised plateau behind the card."],
-        [[1218, 410, 252, 106], "Width, depth and height are not set by hand: they follow from the " +
-          "two slots and the rise."],
-        [[21, 63, 1173, 712], "The stand in 3D. Drag to turn it, use the wheel to zoom."]
+          "base: 131 mm here."],
+        [[1202, 305, 268, 30], "<b>Raise the figure</b>: the same setting as on the Figure page, " +
+          "off here. On, it cuts the figure slot on a raised plateau behind the card."],
+        [[1202, 352, 268, 106], "Width, depth and height are not set by hand: they follow from the " +
+          "two slots. The long base makes this stand 135 mm wide."],
+        [[21, 63, 1157, 712], "The stand in 3D. Drag to turn it, use the wheel to zoom."]
       ] },
 
     { ch: 4, img: "stand-written", size: SHOT,
@@ -457,16 +459,18 @@
       lede: "One more button, and both parts are ready.",
       notes: [
         [[20, 862, 188, 45], "<b>Generate stand STL</b>."],
-        [[593, 62, 314, 66], "<b>Stand_base85_rise30.stl</b>: the name carries the base length " +
-          "and the rise, so a stand and a figure that do not match show at a glance."],
-        [[1218, 602, 252, 46], "The same folder as the figure: <b>Kelpurr_cutout</b> now holds " +
+        [[613, 62, 275, 66], "<b>Stand_base130.stl</b>: the name carries the base length, so a " +
+          "stand and a figure that do not match show at a glance."],
+        [[1202, 630, 268, 46], "The same folder as the figure: <b>Houndivolt_cutout</b> now holds " +
           "both parts to print."]
       ] },
 
-    // Le due immagini sono dei pezzi veri, disegnati da make_turn.py --stills:
-    // non foto. Una stampa di Kelpurr non c'e' ancora; quando ci sara', le foto
-    // tornano qui (verticali, lato lungo 1500 px, senza metadati: vedi README).
-    { ch: 5, img: "print-bed", size: [1500, 1125],
+    // Le due foto del pezzo vero arrivano quando Houndivolt sara' stampato:
+    // fino ad allora il passo resta e dice cosa manca (img a null, vedi sotto).
+    // Per metterle: WebP, lato lungo 1500 px, senza metadati (una foto del
+    // telefono si porta dietro modello e posizione GPS), e la misura in `size`.
+    { ch: 5, img: null, size: [1125, 1500],
+      todo: "Photo coming soon: Houndivolt and its stand on the print bed",
       title: "On the print bed",
       lede: "Open the two STLs in your slicer like any other model: nothing to scale, align or " +
             "join, because they come out at their real size and already in one piece each. " +
@@ -474,9 +478,10 @@
             "they print side by side.",
       notes: [] },
 
-    { ch: 5, img: "assembled", size: [1500, 1125],
-      title: "Assembled",
-      lede: "The base of the figure slides into the raised slot at the back, and the card in its " +
+    { ch: 5, img: null, size: [1125, 1500],
+      todo: "Photo coming soon: the printed Houndivolt, standing next to its card",
+      title: "Printed and assembled",
+      lede: "The base of the figure slides into the slot at the back, and the card in its " +
             "toploader goes into the slot in front of it. The line art stands out in relief, so " +
             "it doubles as a guide if you paint the piece by hand.",
       notes: [] }
@@ -496,7 +501,7 @@
   // Come TURN_V: i riquadri di TOUR sono in pixel delle schermate, e una
   // schermata vecchia ancora nella cache sotto i riquadri nuovi li mette nel
   // posto sbagliato. Si alza a ogni `make_tutorial.py`.
-  var TOUR_V = "?v=8";
+  var TOUR_V = "?v=9";
   function src(step) { return step.img ? "assets/tutorial/" + step.img + ".webp" + TOUR_V : null; }
 
   // la barra dei capitoli: un segmento per passo, e il capitolo si preme
