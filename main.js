@@ -726,7 +726,7 @@
   // Come TURN_V: i riquadri di TOUR sono in pixel delle schermate, e una
   // schermata vecchia ancora nella cache sotto i riquadri nuovi li mette nel
   // posto sbagliato. Si alza a ogni `make_tutorial.py`.
-  var TOUR_V = "?v=10";
+  var TOUR_V = "?v=11";
   function src(step) { return step.img ? "assets/tutorial/" + step.img + ".webp" + TOUR_V : null; }
 
   // la barra dei capitoli: un segmento per passo, e il capitolo si preme
