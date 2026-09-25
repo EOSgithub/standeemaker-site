@@ -717,7 +717,12 @@ b{font-weight:600}
 }
 
 /* ------------------------------------------------------------------- faq */
-.faq-wrap{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:clamp(32px,5vw,112px);align-items:start}
+/* Le risposte riempiono la loro card: a larghezza fissa in caratteri
+   dentro una card piu' larga andavano a capo lasciando una fascia vuota a
+   destra. E' la colonna delle domande ad avere la misura giusta per leggere
+   (44em, circa 85 caratteri per riga), a filo del bordo destro della pagina;
+   lo spazio in piu' va a quella del titolo. */
+.faq-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,44em);gap:clamp(32px,5vw,112px);align-items:start}
 .faq-side{position:sticky;top:calc(var(--bar) + 40px);display:flex;flex-direction:column;gap:18px}
 .faq-side p{color:var(--ink-2);font-size:clamp(16px,1vw,18px)}
 .faq{display:flex;flex-direction:column;gap:10px;interpolate-size:allow-keywords}
@@ -741,7 +746,7 @@ b{font-weight:600}
 .faq summary::after{transform:rotate(90deg)}
 .faq details[open] summary::after{transform:rotate(0)}
 .faq summary:hover{color:var(--accent-text)}
-.faq .answer{padding:0 24px 24px;color:var(--ink-2);font-size:clamp(15.5px,1vw,18px);max-width:66ch}
+.faq .answer{padding:0 24px 24px;color:var(--ink-2);font-size:clamp(15.5px,1vw,18px);text-wrap:pretty}
 .faq .answer b{color:var(--ink);font-weight:600}
 /* l'apertura scorre invece di scattare, dove il browser lo sa fare */
 .faq details::details-content{
