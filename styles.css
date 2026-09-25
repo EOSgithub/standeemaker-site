@@ -734,6 +734,9 @@ b{font-weight:600}
 .plan li .i{width:18px;height:18px;margin-top:3px;stroke-width:2.25}
 .plan .tick{color:var(--accent-text)}
 .plan .cross{color:var(--ink-3)}
+.plan .up{color:var(--accent-text)}
+/* il passaggio a Commercial si stacca dai diritti con un filo sopra */
+.plan li.upgrade{margin-top:4px;padding-top:12px;border-top:1px dashed var(--line)}
 .plan .btn{margin-top:auto}
 
 .trialbar{
