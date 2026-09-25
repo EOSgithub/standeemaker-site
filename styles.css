@@ -67,7 +67,10 @@
   --note:#f0620f;
   --note-ink:#ffffff;
   --note-halo:rgba(255,255,255,.92);
-  --note-veil:rgba(18,19,22,.36);
+  --note-veil:rgba(12,12,14,.55);   /* sulle schermate dell'app, scure: piu' deciso che sul chiaro */
+  /* il fondo dell'app in tema scuro, preso dalle schermate: sotto di loro al
+     posto del bianco, che durante il caricamento lampeggiava */
+  --app-bg:#151412;
 
   --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
   --text:"Geist","Segoe UI",system-ui,sans-serif;
@@ -597,10 +600,19 @@ b{font-weight:600}
 }
 
 /* ------------------------------------------------------- l'app: riquadri */
+/* Il pannello dell'app e' un palco (classe .stage, scuro in tutti e due i
+   temi) come tutto cio' che mostra il prodotto: le schermate sono dell'app in
+   tema scuro, e su un pannello chiaro sembravano foto con un passe-partout. */
 .app-show{
-  background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
-  padding:clamp(10px,1.1vw,18px);box-shadow:var(--shadow-lift);
+  padding:clamp(10px,1.1vw,18px);box-shadow:var(--shadow-lift),inset 0 1px 0 rgba(255,255,255,.05);
 }
+.app-show .tabs{background:rgba(255,255,255,.05);border-color:var(--stage-line)}
+.app-show .tab{color:var(--stage-ink-2)}
+.app-show .tab:hover,.app-show .tab[aria-selected="true"]{color:var(--stage-ink)}
+.app-show .tab-ind{background:rgba(255,255,255,.12);box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+.app-show .note{color:var(--stage-ink-2)}
+.app-show .note b{color:var(--stage-ink)}
+.app-show .shot{border-color:rgba(255,255,255,.07)}
 .app-top{display:flex;flex-wrap:wrap;align-items:center;gap:12px 22px;padding:4px 4px 16px}
 /* le schede: una pillola che scivola sotto quella scelta (.tab-ind, main.js) */
 .tabs{position:relative;display:inline-flex;gap:2px;padding:4px;border-radius:999px;background:var(--bg-2);border:1px solid var(--line-soft)}
@@ -621,7 +633,7 @@ b{font-weight:600}
 .tab[aria-selected="true"]{color:var(--ink)}
 .app-top .note{flex:1 1 320px;min-width:0;transition:opacity .25s,filter .25s}
 .app-top .note.swap{opacity:0;filter:blur(4px)}
-.shot{position:relative;aspect-ratio:1500/920;border-radius:var(--r-md);overflow:hidden;background:var(--paper);border:1px solid var(--line-soft)}
+.shot{position:relative;aspect-ratio:1500/920;border-radius:var(--r-md);overflow:hidden;background:var(--app-bg);border:1px solid var(--line-soft)}
 .shot img{position:absolute;inset:0;width:100%;height:100%;opacity:0;transform:scale(1.012);transition:opacity .5s var(--out),transform .9s var(--out)}
 .shot img.on{opacity:1;transform:none}
 .note{font-size:clamp(15px,.95vw,18px);color:var(--ink-2);line-height:1.5}
@@ -631,12 +643,14 @@ b{font-weight:600}
 .tile{
   display:flex;flex-direction:column;gap:12px;
   background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
-  padding:clamp(10px,1.1vw,18px) clamp(10px,1.1vw,18px) 26px;box-shadow:var(--shadow);
+  padding:8px 8px 26px;box-shadow:var(--shadow);
 }
-.tile-img{border-radius:var(--r-md);border:1px solid var(--line-soft);overflow:hidden;margin-bottom:8px;background:var(--paper)}
+/* poca cornice attorno alla schermata scura: 8 px, e l'angolo interno e'
+   quello esterno meno il margine (22 - 8 = 14) */
+.tile-img{border-radius:var(--r-md);overflow:hidden;margin-bottom:8px;background:var(--app-bg)}
 .tile-img img{display:block;width:100%;height:auto;transition:transform 1.2s var(--out)}
 .tile:hover .tile-img img{transform:scale(1.025)}
-.tile h3,.tile .note{padding-inline:8px}
+.tile h3,.tile .note{padding-inline:16px}
 
 @media (max-width:760px){
   .tiles{grid-template-columns:minmax(0,1fr)}
@@ -659,7 +673,7 @@ b{font-weight:600}
 }
 .tour-poster img{
   display:block;width:100%;height:auto;border-radius:var(--r-md);
-  box-shadow:0 40px 80px -30px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.06);
+  box-shadow:0 40px 80px -30px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.13);
   transition:filter .4s var(--out),transform .8s var(--out);
 }
 .tour-poster:hover img{filter:brightness(.88)}
@@ -933,7 +947,7 @@ dialog.tour{
   display:grid;place-items:center;overflow:hidden;
 }
 .tour-shot{
-  position:relative;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-sm);
+  position:relative;background:var(--app-bg);border:1px solid var(--line);border-radius:var(--r-sm);
   box-shadow:var(--shadow-lift);overflow:hidden;
 }
 .tour-shot img{display:block;width:100%;height:100%;transition:opacity .3s var(--out)}
