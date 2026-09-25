@@ -17,11 +17,11 @@
 <!-- I font stanno in assets/fonts: nessuna richiesta a terzi all'apertura della pagina. -->
 <link rel="preload" href="assets/fonts/barlow-condensed-600.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/barlow-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/turn/t00.webp?v=5" as="image">
+<link rel="preload" href="assets/turn/t00.webp?v=6" as="image">
 <!-- ?v= su foglio e script: GitHub Pages li lascia in cache dieci minuti, e una
      pagina nuova con lo script vecchio si rompe. Si alza a ogni modifica di
      styles.css o main.js, come TURN_V per le viste. -->
-<link rel="stylesheet" href="styles.css?v=2">
+<link rel="stylesheet" href="styles.css?v=4">
 </head>
 <body>
 
@@ -71,8 +71,8 @@
 
     <div class="hero-art graph" id="hero-art">
       <div class="turn-box" id="turn" tabindex="0" role="slider" aria-label="Turn the finished part"
-           aria-valuemin="0" aria-valuemax="29" aria-valuenow="0">
-        <img id="turn-img" src="assets/turn/t00.webp?v=5" width="1040" height="1360" draggable="false"
+           aria-valuemin="0" aria-valuemax="71" aria-valuenow="0">
+        <img id="turn-img" src="assets/turn/t00.webp?v=6" width="1040" height="1360" draggable="false"
              alt="The finished part: the figure slotted into its stand, next to a card in its toploader">
         <span class="turn-tag" id="turn-tag">Drag to turn</span>
       </div>
@@ -123,7 +123,7 @@
       </li>
       <li class="trip">
         <svg class="i trip-join" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-        <div class="trip-art graph" id="print-slot"><img class="still" src="assets/turn/t27.webp?v=5" width="1040" height="1360" loading="lazy"
+        <div class="trip-art graph" id="print-slot"><img class="still" src="assets/turn/t65.webp?v=6" width="1040" height="1360" loading="lazy"
              alt="The finished part in its stand, seen from the side"></div>
         <h3>Print it</h3>
         <p>One STL for the figure, base included, and one for the stand. Open them in any slicer.</p>
@@ -459,6 +459,6 @@
   </div>
 </dialog>
 
-<script src="main.js?v=2"></script>
+<script src="main.js?v=6"></script>
 </body>
 </html>

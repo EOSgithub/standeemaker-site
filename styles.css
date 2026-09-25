@@ -154,7 +154,7 @@ b{font-weight:600}
 /* le sezioni: titolo e una riga, poi il contenuto */
 .sec{padding-block:clamp(88px,9vw,150px) 0}
 .sec-head{display:flex;flex-direction:column;gap:14px;max-width:760px;margin-bottom:clamp(36px,3.5vw,56px)}
-.sec-head p{font-size:clamp(18px,1.25vw,21px);color:var(--ink-soft);text-wrap:balance}
+.sec-head p{font-size:clamp(18px,1.25vw,21px);color:var(--ink-soft)}
 
 /* una fascia a tutta larghezza, un tono sopra il banco: rompe la sequenza di
    sezioni uguali senza cambiare tema */
@@ -176,9 +176,7 @@ b{font-weight:600}
   background-size:80px 80px,80px 80px,8px 8px,8px 8px;
   background-position:-1px -1px;
 }
-/* le viste del pezzo hanno il fondo bianco: moltiplicato, il bianco sparisce e
-   la carta si vede attraverso */
-.graph img{mix-blend-mode:multiply}
+
 
 /* entrano quando arrivano in vista (main.js mette .reveal solo a quelle ancora sotto) */
 .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1)}
@@ -248,11 +246,14 @@ b{font-weight:600}
 }
 .turn-box.grabbing{cursor:grabbing}
 /* le viste hanno molto bianco attorno: un po' piu' alte del riquadro, centrate */
-.turn-box img{
+.turn-box img,.turn-box canvas{
   position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
   height:112%;width:auto;max-width:none;display:block;
   -webkit-user-drag:none;pointer-events:none;
 }
+.turn-box canvas{visibility:hidden}
+.turn-box.live canvas{visibility:visible}
+.turn-box.live img{visibility:hidden}      /* il canvas ha disegnato: l'<img> era solo la prima vista */
 .turn-box:focus-visible{outline-offset:-4px}
 .turn-tag{
   position:absolute;left:50%;bottom:14px;transform:translateX(-50%);white-space:nowrap;
@@ -288,7 +289,7 @@ b{font-weight:600}
 }
 .trip-art img{max-width:84%;max-height:84%;width:auto;height:auto;object-fit:contain}
 /* il pezzo che gira, quando la foto gli ha preso la hero */
-.trip-art .turn-box img,.trip-art img.still{
+.trip-art .turn-box img,.trip-art .turn-box canvas,.trip-art img.still{
   position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
   height:118%;max-height:none;max-width:none;
 }
@@ -326,7 +327,7 @@ b{font-weight:600}
 .shot{position:relative;aspect-ratio:1500/920;border:1px solid var(--rule-soft);border-radius:1px;overflow:hidden;background:var(--paper)}
 .shot img{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .3s ease}
 .shot img.on{opacity:1}
-.note{font-size:clamp(16px,1.05vw,18px);color:var(--ink-soft);max-width:72ch;text-wrap:balance}
+.note{font-size:clamp(16px,1.05vw,18px);color:var(--ink-soft);max-width:72ch}
 .note b{color:var(--ink);font-weight:600}
 
 @media (max-width:760px){
@@ -359,7 +360,7 @@ b{font-weight:600}
 /* -------------------------------------------------------------- tutorial */
 .split{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:48px;align-items:center}
 .split-copy{display:flex;flex-direction:column;gap:18px;align-items:flex-start}
-.split-copy p{font-size:clamp(18px,1.25vw,21px);color:var(--ink-soft);text-wrap:balance}
+.split-copy p{font-size:clamp(18px,1.25vw,21px);color:var(--ink-soft)}
 .tour-poster{
   position:relative;display:block;width:100%;cursor:pointer;font:inherit;color:inherit;
   padding:12px;background:var(--mount);border:1px solid var(--rule);border-radius:2px;box-shadow:var(--shadow-lift);

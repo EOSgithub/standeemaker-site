@@ -42,38 +42,105 @@
   var $ = function (id) { return document.getElementById(id); };
 
   /* ------------------------------------------- il pezzo: girarlo a mano */
-  // Trenta viste del pezzo, una ogni 12 gradi. Si gira trascinando, con lo
-  // scorrimento orizzontale (touchpad, o Shift+rotella) e con le frecce. Lo
-  // scorrimento verticale resta della pagina: chi scorre non deve trovarsi a
+  // Settantadue viste del pezzo, una ogni 5 gradi, col fondo trasparente (la
+  // carta millimetrata si vede intorno, non attraverso). Si gira trascinando,
+  // con lo scorrimento orizzontale (touchpad, o Shift+rotella) e con le frecce.
+  // Lo scorrimento verticale resta della pagina: chi scorre non deve trovarsi a
   // girare il pezzo invece di andare avanti.
-  var TURN_N = 30, TURN_PX = 14;             // pixel di trascinamento per vista
-  // Le trenta viste hanno sempre lo stesso nome, ma il browser ne tiene una
-  // copia buona dieci minuti: rifattele, la prima (che sta nella pagina) si
+  //
+  // Si disegna su un canvas, con le viste gia' decodificate: cambiare lo `src`
+  // di un'immagine a ogni passo costringeva il browser a decodificarla in quel
+  // momento, e il giro andava a scatti. L'<img> resta come prima vista (e per
+  // chi non ha JavaScript) finche' il canvas non ha disegnato.
+  var TURN_N = 72, TURN_PX = 6;              // pixel di trascinamento per vista
+  // Le viste hanno sempre lo stesso nome, ma il browser ne tiene una copia
+  // buona dieci minuti: rifattele, la prima (che sta nella pagina) si
   // riscarica e le altre no, e il pezzo cambiava aspetto girandolo. Questo
   // numero si alza a ogni `make_turn.py`, e la copia vecchia non viene piu'
-  // chiesta. Va tenuto uguale al `?v=` dell'immagine nella pagina.
-  var TURN_V = "?v=5";
+  // chiesta. Va tenuto uguale ai `?v=` delle viste nella pagina.
+  var TURN_V = "?v=6";
   var turnBox = $("turn"), turnImg = $("turn-img"), turnTag = $("turn-tag");
   var turnSrc = function (i) { return "assets/turn/t" + (i < 10 ? "0" : "") + i + ".webp" + TURN_V; };
-  var turnAt = 0, turnAcc = 0, turnDrag = null, turnLoaded = false;
+  // La posizione e' continua (in viste, 0..72): fra due viste si disegna la
+  // loro miscela, cosi' il giro scorre a 60 fotogrammi invece di saltare di 5
+  // gradi alla volta. `turnWant` e' la vista piu' vicina, quella che si dice
+  // allo screen reader e che le frecce spostano di uno.
+  var turnPos = 0, turnWant = 0, turnDrag = null;
+  var views = [], ready = [];
+  var canvas = document.createElement("canvas"), ctx = canvas.getContext("2d");
+  canvas.width = turnImg.getAttribute("width");
+  canvas.height = turnImg.getAttribute("height");
+  canvas.setAttribute("aria-hidden", "true");
+  turnBox.insertBefore(canvas, turnImg.nextSibling);
 
-  function turnLoad() {                      // le viste si scaricano la prima volta che servono
+  var wrap = function (i) { return ((i % TURN_N) + TURN_N) % TURN_N; };
+  // una vista: la si chiede una volta, e la si puo' disegnare solo decodificata
+  function view(i) {
+    if (!views[i]) {
+      var im = views[i] = new Image();
+      im.src = turnSrc(i);
+      views[i].done = (im.decode ? im.decode() : new Promise(function (ok) { im.onload = ok; }))
+        .then(function () { ready[i] = true; paint(); })
+        .catch(function () {});
+    }
+    return views[i];
+  }
+  // Due viste mescolate con "lighter": le viste sono premoltiplicate, quindi la
+  // somma pesata e' la miscela esatta, e dove tutte e due sono piene il pezzo
+  // resta pieno (con due disegni sovrapposti in trasparenza la carta si
+  // vedrebbe attraverso a meta' strada). Manca una delle due: si disegna quella
+  // che c'e'; mancano tutte e due: resta cio' che c'era, niente lampi di vuoto.
+  function paint() {
+    var a = Math.floor(turnPos), f = turnPos - a, b = wrap(a + 1);
+    a = wrap(a);
+    view(a); view(b);
+    if (f < 0.02 || !ready[b]) { f = 0; }
+    if (f > 0.98 || !ready[a]) { f = 1; }
+    if ((f < 1 && !ready[a]) || (f > 0 && !ready[b])) return;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (f === 0 || f === 1) {
+      ctx.drawImage(views[f === 0 ? a : b], 0, 0, canvas.width, canvas.height);
+    } else {
+      ctx.globalCompositeOperation = "lighter";
+      ctx.globalAlpha = 1 - f;
+      ctx.drawImage(views[a], 0, 0, canvas.width, canvas.height);
+      ctx.globalAlpha = f;
+      ctx.drawImage(views[b], 0, 0, canvas.width, canvas.height);
+      ctx.globalAlpha = 1;
+      ctx.globalCompositeOperation = "source-over";
+    }
+    turnBox.classList.add("live");
+  }
+  var turnLoaded = false;
+  function turnLoad() {                      // tutte le viste, la prima volta che servono
     if (turnLoaded) return;
     turnLoaded = true;
-    for (var i = 1; i < TURN_N; i++) { new Image().src = turnSrc(i); }
+    for (var i = 0; i < TURN_N; i++) { view(i); }
   }
   // `quiet`: a girarlo e' la pagina, non chi guarda, e l'invito a trascinare resta
-  function turnTo(i, quiet) {
-    turnAt = ((Math.round(i) % TURN_N) + TURN_N) % TURN_N;
-    turnImg.src = turnSrc(turnAt);
-    turnBox.setAttribute("aria-valuenow", turnAt);
+  function turnTo(p, quiet) {
+    turnPos = ((p % TURN_N) + TURN_N) % TURN_N;
+    turnWant = wrap(Math.round(turnPos));
+    paint();
+    turnBox.setAttribute("aria-valuenow", turnWant);
     if (!quiet) { turnTag.classList.add("gone"); swept = true; }
   }
-  function turnBy(px) {
-    turnAcc += px;
-    var steps = Math.trunc(turnAcc / TURN_PX);
-    if (steps) { turnAcc -= steps * TURN_PX; turnTo(turnAt - steps); }
+  function turnBy(px) { settling = null; turnTo(turnPos - px / TURN_PX); }
+  // A mano ferma il pezzo si posa sulla vista piu' vicina: la miscela e' per
+  // il movimento, ferma si vedrebbe come un doppio contorno.
+  var settling = null;
+  function settle() {
+    var from = turnPos, to = Math.round(turnPos), t0 = null, my = settling = {};
+    if (Math.abs(to - from) < 0.01) { turnTo(to); return; }
+    requestAnimationFrame(function step(t) {
+      if (settling !== my) return;
+      if (t0 === null) { t0 = t; }
+      var k = Math.min(1, (t - t0) / 150);
+      turnTo(from + (to - from) * (1 - Math.pow(1 - k, 3)));
+      if (k < 1) { requestAnimationFrame(step); } else { settling = null; }
+    });
   }
+  var wheelEnd = null;
   turnBox.addEventListener("pointerenter", turnLoad);
   turnBox.addEventListener("pointerdown", function (e) {
     turnLoad();
@@ -91,6 +158,7 @@
     if (turnDrag === null) return;
     turnDrag = null;
     turnBox.classList.remove("grabbing");
+    settle();
     try { turnBox.releasePointerCapture(e.pointerId); } catch (err) {}
   }
   turnBox.addEventListener("pointerup", turnUp);
@@ -101,13 +169,16 @@
     e.preventDefault();
     turnLoad();
     turnBy(-dx);
+    clearTimeout(wheelEnd);
+    wheelEnd = setTimeout(settle, 140);      // la rotella non dice quando smette
   }, { passive: false });
   turnBox.addEventListener("keydown", function (e) {
     var d = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
     if (!d) return;
     e.preventDefault();
     turnLoad();
-    turnTo(turnAt + d);
+    settling = null;
+    turnTo(turnWant + d);
   });
 
   // La foto vera, quando c'e', prende la hero; il pezzo che gira scende nel
@@ -121,34 +192,44 @@
     $("hero-art").appendChild(photo);
   }
 
-  // Un'occhiata da solo, una volta: il pezzo ruota di qualche vista avanti e
-  // torna. Dice senza parole che e' in 3D e che si gira; chi lo tocca prima lo
-  // ferma. Niente, per chi ha chiesto meno movimento o se non e' nella hero.
+  // Un'occhiata da sola, una volta: dalla vista di fronte il pezzo ruota di
+  // 45 gradi e torna, in una curva sola e morbida. Dice senza parole che e' in
+  // 3D e che si gira. Parte solo con tutte le viste del tratto gia'
+  // decodificate, cosi' non inciampa; chi tocca il pezzo prima la ferma.
+  // Niente, per chi ha chiesto meno movimento o se il pezzo non e' nella hero.
   var swept = false;
   function sweep() {
     if (swept || SITE.photos.hero) return;
     if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    var views = [1, 2, 3, 4, 5].map(function (i) {
-      var im = new Image(); im.src = turnSrc(i); return im;
-    });
-    var ready = function () { return views.every(function (im) { return im.complete; }); };
-    var t0 = null, waited = 0, SPAN = 2400, AMP = 5;
-    function frame(t) {
+    var AMP = 9, SPAN = 2600, need = [];
+    for (var i = 0; i <= AMP; i++) { need.push(view(i).done); }
+    Promise.all(need).then(function () {
       if (swept) return;
-      if (t0 === null) {
-        if (!ready() && waited++ < 120) { requestAnimationFrame(frame); return; }
-        t0 = t;
+      var t0 = null;
+      function frame(t) {
+        if (swept) return;
+        if (t0 === null) { t0 = t; }
+        var k = Math.min(1, (t - t0) / SPAN);
+        // andata e ritorno: sin(pi*e), con e che accelera e frena ai due capi
+        var e = 0.5 - 0.5 * Math.cos(Math.PI * k);
+        turnTo(AMP * Math.sin(Math.PI * e), true);
+        if (k < 1) { requestAnimationFrame(frame); } else { turnTo(0, true); }
       }
-      var k = Math.min(1, (t - t0) / SPAN);
-      // avanti e indietro in una sola curva, con le estremita' morbide
-      var v = Math.round(AMP * Math.sin(Math.PI * (0.5 - 0.5 * Math.cos(Math.PI * k))));
-      if (v !== turnAt) { turnTo(v, true); }
-      if (k < 1) { requestAnimationFrame(frame); } else { turnTo(0, true); }
-    }
-    requestAnimationFrame(frame);
+      requestAnimationFrame(frame);
+    });
   }
-  if (document.readyState === "complete") { setTimeout(sweep, 600); }
-  else { window.addEventListener("load", function () { setTimeout(sweep, 600); }); }
+  // Chi apre la pagina in una scheda dietro non deve perdersela, ne' vederla
+  // partire mentre guarda altro: si aspetta che la scheda sia in vista.
+  function sweepSoon() {
+    if (!document.hidden) { setTimeout(sweep, 500); return; }
+    document.addEventListener("visibilitychange", function once() {
+      if (document.hidden) return;
+      document.removeEventListener("visibilitychange", once);
+      setTimeout(sweep, 500);
+    });
+  }
+  if (document.readyState === "complete") { sweepSoon(); }
+  else { window.addEventListener("load", sweepSoon); }
 
   /* --------------------------------------------------------- schermate */
   // La prima e' anche scritta nella pagina: chi arriva col JavaScript spento
