@@ -917,6 +917,15 @@ dialog[open]::backdrop{background:rgba(10,11,13,.55);-webkit-backdrop-filter:blu
   padding:12px 15px;font-size:14.5px;color:var(--ink-2);
 }
 .callout b{color:var(--ink);font-weight:600}
+
+/* l'avviso di SmartScreen nella finestra della prova: una riga quieta, non
+   un allarme, subito prima del pulsante */
+.winnote{
+  display:grid;grid-template-columns:20px 1fr;gap:10px;align-items:start;
+  padding-top:14px;border-top:1px solid var(--line-soft);
+}
+.winnote .i{width:18px;height:18px;margin-top:2px;color:var(--ink-3)}
+.dlg-body .winnote p{font-size:14.5px;color:var(--ink-2)}
 .hint{font-size:13.5px;color:var(--ink-3);text-align:center}
 .btn[aria-disabled="true"]{opacity:.55;cursor:not-allowed;transform:none;box-shadow:none}
 
