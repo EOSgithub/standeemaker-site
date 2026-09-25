@@ -721,8 +721,9 @@ b{font-weight:600}
    dentro una card piu' larga andavano a capo lasciando una fascia vuota a
    destra. E' la colonna delle domande ad avere la misura giusta per leggere
    (44em, circa 85 caratteri per riga), a filo del bordo destro della pagina;
-   lo spazio in piu' va a quella del titolo. */
-.faq-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,44em);gap:clamp(32px,5vw,112px);align-items:start}
+   lo spazio in piu' va a quella del titolo, che pero' non scende sotto i
+   15em: verso i 1024 px veniva schiacciata a meno di 150 px. */
+.faq-wrap{display:grid;grid-template-columns:minmax(15em,1fr) minmax(0,44em);gap:clamp(32px,5vw,112px);align-items:start}
 .faq-side{position:sticky;top:calc(var(--bar) + 40px);display:flex;flex-direction:column;gap:18px}
 .faq-side p{color:var(--ink-2);font-size:clamp(16px,1vw,18px)}
 .faq{display:flex;flex-direction:column;gap:10px;interpolate-size:allow-keywords}

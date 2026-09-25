@@ -30,7 +30,7 @@
 <!-- ?v= su foglio e script: GitHub Pages li lascia in cache dieci minuti, e una
      pagina nuova con lo script vecchio si rompe. Si alza a ogni modifica di
      styles.css o main.js, come TURN_V per le viste. -->
-<link rel="stylesheet" href="styles.css?v=21">
+<link rel="stylesheet" href="styles.css?v=22">
 </head>
 <body>
 <div class="sentinel" aria-hidden="true"></div>
@@ -194,8 +194,7 @@
         </div>
         <!-- La prima nota e' anche scritta qui: chi ha il JavaScript spento la legge
              lo stesso. Deve restare uguale a NOTES[0] in main.js. -->
-        <p class="note" id="unote" aria-live="polite"><b>Trace</b> puts the picture and its outline side by side, at
-        the same height. Size and line width are on the right.</p>
+        <p class="note" id="unote" aria-live="polite"><span class="ph"><b>Trace</b> puts the picture and its outline</span> <span class="ph">side by side, at the same height.</span> <span class="ph">Size and line width are on the right.</span></p>
       </div>
       <div class="shot" id="shot">
         <img class="on" id="u0" src="assets/ui/trace.webp" width="1500" height="920" loading="lazy" alt="The Trace page: library on the left, picture and outline in the middle, settings on the right">
@@ -541,6 +540,6 @@
   </div>
 </dialog>
 
-<script src="main.js?v=13"></script>
+<script src="main.js?v=14"></script>
 </body>
 </html>
