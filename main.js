@@ -29,38 +29,17 @@
       commercial: null,
       vendor: "Polar"               // Polar Software, Inc.: il merchant of record
     },
-    prices: { pro: "19.99", commercial: "99.99" }
+    prices: { pro: "19.99", commercial: "99.99" },
+    // Le foto vere del pezzo stampato (solo soggetti di samples/; WebP, lato
+    // lungo 1500 px, senza metadati). Finche' e' null la hero mostra il pezzo
+    // che gira; con la foto, la foto prende la hero e il pezzo scende al terzo
+    // dei tre passi.
+    photos: {
+      hero: null                    // es. "assets/photo/hero.webp"
+    }
   };
 
   var $ = function (id) { return document.getElementById(id); };
-
-  /* ---------------------------------------------------------- la catena */
-  var CAPS = [
-    ["Kelpurr", "image &middot; 821 &times; 668 px"],
-    ["Kelpurr_silhouette.svg  +  _lineart.svg", "150 &times; 121 mm"],
-    ["Kelpurr.stl  +  Stand_base85_rise30.stl", "33,304 + 212 triangles"]
-  ];
-  var cap = $("cap");
-  var steps = [0, 1, 2].map(function (i) { return $("s" + i); });
-  var layers = [0, 1, 2].map(function (i) { return $("h" + i); });
-
-  function showStep(i) {
-    steps.forEach(function (b, j) { b.setAttribute("aria-selected", j === i ? "true" : "false"); });
-    layers.forEach(function (im, j) { im.classList.toggle("on", j === i); });
-    cap.innerHTML = "<b>" + CAPS[i][0] + "</b><span>" + CAPS[i][1] + "</span>";
-  }
-  steps.forEach(function (b, i) {
-    b.addEventListener("click", function () { showStep(i); });
-    b.addEventListener("keydown", function (e) {
-      var d = e.key === "ArrowDown" || e.key === "ArrowRight" ? 1
-            : e.key === "ArrowUp" || e.key === "ArrowLeft" ? -1 : 0;
-      if (!d) return;
-      e.preventDefault();
-      var n = (i + d + steps.length) % steps.length;
-      steps[n].focus(); showStep(n);
-    });
-  });
-  showStep(2);                               // si parte dal pezzo finito: e' quello che si viene a vedere
 
   /* ------------------------------------------- il pezzo: girarlo a mano */
   // Trenta viste del pezzo, una ogni 12 gradi. Si gira trascinando, con lo
@@ -73,8 +52,8 @@
   // riscarica e le altre no, e il pezzo cambiava aspetto girandolo. Questo
   // numero si alza a ogni `make_turn.py`, e la copia vecchia non viene piu'
   // chiesta. Va tenuto uguale al `?v=` dell'immagine nella pagina.
-  var TURN_V = "?v=4";
-  var turnBox = $("h2"), turnImg = $("turn-img"), turnTag = $("turn-tag");
+  var TURN_V = "?v=5";
+  var turnBox = $("turn"), turnImg = $("turn-img"), turnTag = $("turn-tag");
   var turnSrc = function (i) { return "assets/turn/t" + (i < 10 ? "0" : "") + i + ".webp" + TURN_V; };
   var turnAt = 0, turnAcc = 0, turnDrag = null, turnLoaded = false;
 
@@ -83,18 +62,18 @@
     turnLoaded = true;
     for (var i = 1; i < TURN_N; i++) { new Image().src = turnSrc(i); }
   }
-  function turnTo(i) {
+  // `quiet`: a girarlo e' la pagina, non chi guarda, e l'invito a trascinare resta
+  function turnTo(i, quiet) {
     turnAt = ((Math.round(i) % TURN_N) + TURN_N) % TURN_N;
     turnImg.src = turnSrc(turnAt);
     turnBox.setAttribute("aria-valuenow", turnAt);
-    turnTag.classList.add("gone");
+    if (!quiet) { turnTag.classList.add("gone"); swept = true; }
   }
   function turnBy(px) {
     turnAcc += px;
     var steps = Math.trunc(turnAcc / TURN_PX);
     if (steps) { turnAcc -= steps * TURN_PX; turnTo(turnAt - steps); }
   }
-  steps[2].addEventListener("click", turnLoad);
   turnBox.addEventListener("pointerenter", turnLoad);
   turnBox.addEventListener("pointerdown", function (e) {
     turnLoad();
@@ -131,13 +110,53 @@
     turnTo(turnAt + d);
   });
 
+  // La foto vera, quando c'e', prende la hero; il pezzo che gira scende nel
+  // riquadro del terzo passo, al posto della vista ferma.
+  if (SITE.photos.hero) {
+    var slot = $("print-slot"), photo = new Image();
+    photo.src = SITE.photos.hero;
+    photo.alt = "A printed standee in its stand, next to a card in its toploader";
+    slot.innerHTML = "";
+    slot.appendChild(turnBox);
+    $("hero-art").appendChild(photo);
+  }
+
+  // Un'occhiata da solo, una volta: il pezzo ruota di qualche vista avanti e
+  // torna. Dice senza parole che e' in 3D e che si gira; chi lo tocca prima lo
+  // ferma. Niente, per chi ha chiesto meno movimento o se non e' nella hero.
+  var swept = false;
+  function sweep() {
+    if (swept || SITE.photos.hero) return;
+    if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    var views = [1, 2, 3, 4, 5].map(function (i) {
+      var im = new Image(); im.src = turnSrc(i); return im;
+    });
+    var ready = function () { return views.every(function (im) { return im.complete; }); };
+    var t0 = null, waited = 0, SPAN = 2400, AMP = 5;
+    function frame(t) {
+      if (swept) return;
+      if (t0 === null) {
+        if (!ready() && waited++ < 120) { requestAnimationFrame(frame); return; }
+        t0 = t;
+      }
+      var k = Math.min(1, (t - t0) / SPAN);
+      // avanti e indietro in una sola curva, con le estremita' morbide
+      var v = Math.round(AMP * Math.sin(Math.PI * (0.5 - 0.5 * Math.cos(Math.PI * k))));
+      if (v !== turnAt) { turnTo(v, true); }
+      if (k < 1) { requestAnimationFrame(frame); } else { turnTo(0, true); }
+    }
+    requestAnimationFrame(frame);
+  }
+  if (document.readyState === "complete") { setTimeout(sweep, 600); }
+  else { window.addEventListener("load", function () { setTimeout(sweep, 600); }); }
+
   /* --------------------------------------------------------- schermate */
   // La prima e' anche scritta nella pagina: chi arriva col JavaScript spento
   // deve leggerla lo stesso. Le due devono restare uguali.
   var NOTES = [
-    "The image on the left, what comes out of it on the right, at the same height.",
-    "You work face-on, in 2D, and that is not a simplification: the part is an extrusion, so seen from the front it hides nothing. The little drawing at the top right answers what the numbers leave out, <b>how much of the figure stands above the card</b>: 57 mm here. The base sits on the figure&rsquo;s centre of gravity, a little higher and a little longer than it starts, so that it takes in both hooves on the ground.",
-    "Two measurements: how wide the toploader slot is, and which figure this stand is for. A switch drops the toploader slot, for a figure that stands on its own. The dropdown <b>starts empty</b> on purpose: a stand is printed for one figure, and a choice the app makes on your behalf is a choice nobody re-reads."
+    "<b>Trace</b> puts the picture and its outline side by side, at the same height. Size and line width are on the right.",
+    "<b>Figure</b> turns the outline into a solid on a base that slides into the stand. The drawing at the top right shows how much of the figure stands above the card: 57 mm here.",
+    "<b>Stand</b> makes the block. Pick the figure and the width of the card slot: width, depth and height follow from the two."
   ];
   var unote = $("unote");
   var tabs = [0, 1, 2].map(function (i) { return $("p" + i); });
@@ -176,10 +195,11 @@
       '<div class="cmp-box">' +
         '<img loading="lazy" src="assets/ex/' + slug + '_a.webp" alt="' + name + ', the starting image">' +
         '<img loading="lazy" class="b" src="assets/ex/' + slug + '_b.webp" alt="' + name + ' traced: silhouette in grey, line art in black">' +
-        '<div class="cmp-tag l">trace</div><div class="cmp-tag r">image</div>' +
         '<div class="cmp-bar"><span class="cmp-grip" tabindex="0" role="slider" ' +
           'aria-label="How much of the ' + name + ' trace to uncover" ' +
-          'aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"></span></div>' +
+          'aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">' +
+          '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18-6-6 6-6"/><path d="m15 6 6 6-6 6"/></svg>' +
+        '</span></div>' +
       '</div><figcaption>' + name + '</figcaption>';
 
     var box = fig.querySelector(".cmp-box"), grip = fig.querySelector(".cmp-grip");
@@ -223,6 +243,9 @@
   document.querySelectorAll("[data-open]").forEach(function (b) {
     b.addEventListener("click", function () {
       var dlg = $(b.getAttribute("data-open"));
+      // "Buy Pro" e "Buy Commercial" aprono lo stesso modale, gia' sull'edizione giusta
+      var ed = b.getAttribute("data-edition");
+      if (ed && $("pick-" + ed)) { $("pick-" + ed).checked = true; refreshBuy(); }
       if (dlg && typeof dlg.showModal === "function") { dlg.showModal(); }
       else if (dlg) { dlg.setAttribute("open", ""); }
     });
@@ -498,6 +521,15 @@
       notes: [] }
   ];
 
+  // Un passo senza immagine (le foto del pezzo stampato non ci sono ancora)
+  // non va in pubblico: un segnaposto su una pagina che vende sembra lavoro
+  // lasciato a meta'. Torna da solo quando `img` ha il nome del file. Via
+  // anche i capitoli rimasti senza passi, che sono in fondo.
+  TOUR = TOUR.filter(function (s) { return s.img; });
+  while (CHAPTERS.length && !TOUR.some(function (s) { return s.ch === CHAPTERS.length - 1; })) {
+    CHAPTERS.pop();
+  }
+
   var tour = $("dlg-tour");
   var tv = {
     sub: $("tour-sub"), bar: $("tour-bar"), stage: $("tour-stage"), shot: $("tour-shot"),
@@ -531,6 +563,7 @@
     b.addEventListener("click", function () { show(first); });
     tv.bar.appendChild(b);
   });
+  tv.bar.style.setProperty("--chapters", CHAPTERS.length);
 
   // La schermata sta intera nel palco: la misura la si calcola, perche' i
   // segni sopra devono restare incollati all'immagine a qualunque grandezza.
@@ -635,8 +668,8 @@
 
     // Il numero del passo e' quello del capitolo: le schermate dentro lo stesso
     // capitolo sono momenti dello stesso passo, non passi in piu'.
-    var label = "Step " + (step.ch + 1) + " · " + CHAPTERS[step.ch];
-    tv.sub.textContent = "Step " + (step.ch + 1) + " of " + CHAPTERS.length + " · " + CHAPTERS[step.ch];
+    var label = CHAPTERS[step.ch];
+    tv.sub.textContent = "Step " + (step.ch + 1) + " of " + CHAPTERS.length + ": " + CHAPTERS[step.ch];
     tv.count.textContent = (step.ch + 1) + " / " + CHAPTERS.length;
     ticks.forEach(function (t, j) {
       t.className = j < at ? "done" : j === at ? "now" : "";
@@ -729,8 +762,8 @@
     dl.removeAttribute("aria-disabled");
     dl.setAttribute("download", "");
     dlState.innerHTML = "The download starts straight away: no email, no sign-up.";
-    dlMeta.innerHTML = ".exe &middot; " + (SITE.trial.size || "unknown size") +
-      (SITE.trial.sha256 ? " &middot; SHA-256 " + SITE.trial.sha256 : "");
+    dlMeta.innerHTML = "Windows installer (.exe), " + (SITE.trial.size || "64-bit") +
+      (SITE.trial.sha256 ? "<br>SHA-256 " + SITE.trial.sha256 : "");
   } else {
     dl.addEventListener("click", function (e) { e.preventDefault(); });
   }
@@ -771,6 +804,22 @@
     if (go.getAttribute("aria-disabled") === "true") { e.preventDefault(); }
   });
   refreshBuy();
+
+  /* ------------------------------------------ le sezioni entrano in vista */
+  // Solo quelle ancora sotto il bordo: una sezione gia' in vista al caricamento
+  // non deve sparire e ricomparire.
+  if ("IntersectionObserver" in window) {
+    var seen = new IntersectionObserver(function (list) {
+      list.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add("in"); seen.unobserve(e.target); }
+      });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+    document.querySelectorAll("main .sec, main .facts").forEach(function (el) {
+      if (el.getBoundingClientRect().top < window.innerHeight) return;
+      el.classList.add("reveal");
+      seen.observe(el);
+    });
+  }
 
   /* ---------------------------------------------- segnaposto ancora vivi */
   document.querySelectorAll("a.todo[href='#']").forEach(function (a) {
