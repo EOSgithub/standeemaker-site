@@ -384,7 +384,10 @@ b{font-weight:600}
 .js .hero-stage .turn-box{opacity:0;transform:translateY(28px);transition:opacity 1.2s var(--out) .45s,transform 1.6s var(--out) .45s}
 .js .hero-stage .floor{opacity:0;transition:opacity 1.4s var(--out) .7s}
 .js.ready .hero-stage{opacity:1;transform:none}
-.js.ready .hero-stage .turn-box,.js.ready .hero-stage .floor{opacity:1;transform:none}
+.js.ready .hero-stage .turn-box{opacity:1;transform:none}
+/* l'ombra solo in opacita': il suo transform e' il translateX(-50%) che la
+   centra sotto lo stand, e azzerarlo la spostava a destra */
+.js.ready .hero-stage .floor{opacity:1}
 
 .turn-box{
   position:absolute;inset:0;display:grid;place-items:center;
@@ -414,6 +417,12 @@ b{font-weight:600}
 /* l'unico movimento che si ripete da solo: due volte, per dire "si gira" */
 @keyframes tag-nudge{0%,100%{transform:rotate(0)}40%{transform:rotate(-200deg)}70%{transform:rotate(-160deg)}}
 .turn-tag.gone{opacity:0;transform:translate(-50%,6px)}
+/* L'etichetta entra con una dissolvenza sua e non con data-reveal: finendo,
+   quella azzerava il transform, e con lui il translateX(-50%) che la
+   centra, lasciandola spostata a destra di mezza larghezza. */
+.js .turn-tag{opacity:0;transition:opacity .9s var(--out) 1.5s,transform .6s var(--out)}
+.js.ready .turn-tag:not(.gone){opacity:1}
+.js .turn-tag.gone{transition-delay:0s}
 
 /* il disegno di partenza, appoggiato davanti al palco come una carta */
 .hero-card{
@@ -451,6 +460,10 @@ b{font-weight:600}
   /* stretto, la carta sale in alto a sinistra: in basso coprirebbe "Drag to turn" */
   .hero-card{top:18px;bottom:auto;left:18px;transform-origin:top left}
   .facts{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+/* sul telefono la carta non c'e': non ci sta accanto al pezzo senza coprirlo */
+@media (max-width:640px){
+  .hero-card{display:none}
 }
 
 /* ------------------------------------------ come funziona: i tre stati */
@@ -1035,7 +1048,8 @@ dialog.tour{
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{transition-duration:.01ms!important;transition-delay:0s!important;animation-duration:.01ms!important;animation-iteration-count:1!important;animation-delay:0s!important}
-  .js [data-reveal],.js [data-split] .w,.js .hero-stage,.js .hero-stage .turn-box,.js .hero-stage .floor,.js .hero-card{opacity:1;transform:none;filter:none}
+  .js [data-reveal],.js [data-split] .w,.js .hero-stage,.js .hero-stage .turn-box,.js .hero-card{opacity:1;transform:none;filter:none}
+  .js .hero-stage .floor,.js .turn-tag:not(.gone){opacity:1}
   .js .hero-card{transform:rotate(-4deg)}
   .how-step{transform:none}
 }
