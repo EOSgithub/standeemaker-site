@@ -146,13 +146,17 @@
 
   // La foto vera, quando c'e', prende la hero; il pezzo che gira scende nel
   // riquadro del terzo passo, al posto della vista ferma.
+  // La carta col disegno di partenza sta davanti al pezzo: davanti alla foto
+  // no, la foto mostra gia' la carta vera.
   if (SITE.photos.hero) {
-    var slot = $("print-slot"), photo = new Image();
+    var slot = $("print-slot"), photo = new Image(), card = document.querySelector(".hero-card");
     photo.src = SITE.photos.hero;
+    photo.className = "hero-photo";
     photo.alt = "A printed standee in its stand, next to a card in its toploader";
     slot.innerHTML = "";
     slot.appendChild(turnBox);
     $("hero-art").appendChild(photo);
+    if (card) { card.remove(); }
   }
 
   // All'apertura il pezzo sta fermo: niente mezzo giro da solo (c'era, tolto
@@ -189,63 +193,122 @@
 
   /* ------------------------------------------------------------ esempi */
   // Solo i soggetti di samples/, di cui abbiamo il permesso (samples/CREDITS.txt):
-  // le immagini le rifa' make_examples.py.
+  // le immagini le rifa' make_examples.py. Un confronto solo, grande, perche' la
+  // qualita' delle linee si vede solo cosi'; le miniature scelgono il soggetto.
   var EX = [
     ["kelpurr", "Kelpurr"], ["cervinox", "Cervinox"],
     ["houndivolt", "Houndivolt"], ["anchorjaw", "Anchorjaw"]
   ];
-  var grid = $("grid");
+  var cmp = $("cmp"), exPicks = $("ex-picks");
+  cmp.innerHTML =
+    '<div class="cmp-box paper">' +
+      '<img class="a" alt="">' +
+      '<img class="b" alt="">' +
+      '<span class="cmp-side l" aria-hidden="true">Trace</span>' +
+      '<span class="cmp-side r" aria-hidden="true">Picture</span>' +
+      '<div class="cmp-bar"><span class="cmp-grip" tabindex="0" role="slider" ' +
+        'aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">' +
+        '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18-6-6 6-6"/><path d="m15 6 6 6-6 6"/></svg>' +
+      '</span></div>' +
+    '</div>';
+  var box = cmp.querySelector(".cmp-box"), grip = cmp.querySelector(".cmp-grip");
+  var imA = cmp.querySelector("img.a"), imB = cmp.querySelector("img.b");
+  var cmpAt = 50, cmpDown = false, exAt = -1;
 
-  function compare(slug, name) {
-    var fig = document.createElement("figure");
-    fig.className = "cmp";
-    fig.innerHTML =
-      '<div class="cmp-box">' +
-        '<img loading="lazy" src="assets/ex/' + slug + '_a.webp" alt="' + name + ', the starting image">' +
-        '<img loading="lazy" class="b" src="assets/ex/' + slug + '_b.webp" alt="' + name + ' traced: silhouette in grey, line art in black">' +
-        '<div class="cmp-bar"><span class="cmp-grip" tabindex="0" role="slider" ' +
-          'aria-label="How much of the ' + name + ' trace to uncover" ' +
-          'aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">' +
-          '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18-6-6 6-6"/><path d="m15 6 6 6-6 6"/></svg>' +
-        '</span></div>' +
-      '</div><figcaption>' + name + '</figcaption>';
+  function cmpSet(p) {
+    cmpAt = Math.max(0, Math.min(100, p));
+    box.style.setProperty("--p", cmpAt + "%");
+    box.style.setProperty("--r", (100 - cmpAt) + "%");
+    grip.setAttribute("aria-valuenow", Math.round(cmpAt));
+  }
+  function cmpFrom(e) {
+    var r = box.getBoundingClientRect();
+    cmpSet((e.clientX - r.left) / r.width * 100);
+  }
+  box.addEventListener("pointerdown", function (e) {
+    cmpDown = true; box.setPointerCapture(e.pointerId); cmpFrom(e); e.preventDefault();
+  });
+  box.addEventListener("pointermove", function (e) { if (cmpDown) { cmpFrom(e); e.preventDefault(); } });
+  function cmpUp(e) {
+    if (!cmpDown) return;
+    cmpDown = false;
+    try { box.releasePointerCapture(e.pointerId); } catch (err) {}
+  }
+  box.addEventListener("pointerup", cmpUp);
+  box.addEventListener("pointercancel", cmpUp);
+  grip.addEventListener("keydown", function (e) {
+    var d = e.key === "ArrowRight" ? 4 : e.key === "ArrowLeft" ? -4 : 0;
+    if (!d) return;
+    e.preventDefault();
+    cmpSet(cmpAt + d);
+  });
 
-    var box = fig.querySelector(".cmp-box"), grip = fig.querySelector(".cmp-grip");
-    var at = 50, down = false;
-
-    function set(p) {
-      at = Math.max(0, Math.min(100, p));
-      box.style.setProperty("--p", at + "%");
-      box.style.setProperty("--r", (100 - at) + "%");
-      grip.setAttribute("aria-valuenow", Math.round(at));
-    }
-    function from(e) {
-      var r = box.getBoundingClientRect();
-      set((e.clientX - r.left) / r.width * 100);
-    }
-    box.addEventListener("pointerdown", function (e) {
-      down = true; box.setPointerCapture(e.pointerId); from(e); e.preventDefault();
+  // Il cambio di soggetto passa per una dissolvenza breve: le due immagini
+  // nuove si mostrano solo quando sono tutte e due decodificate, insieme.
+  function showEx(k) {
+    if (k === exAt) return;
+    exAt = k;
+    var slug = EX[k][0], name = EX[k][1];
+    Array.prototype.forEach.call(exPicks.children, function (b, j) {
+      b.setAttribute("aria-selected", j === k ? "true" : "false");
+      b.tabIndex = j === k ? 0 : -1;
     });
-    box.addEventListener("pointermove", function (e) { if (down) { from(e); e.preventDefault(); } });
-    function up(e) {
-      if (!down) return;
-      down = false;
-      try { box.releasePointerCapture(e.pointerId); } catch (err) {}
-    }
-    box.addEventListener("pointerup", up);
-    box.addEventListener("pointercancel", up);
-    grip.addEventListener("keydown", function (e) {
-      var d = e.key === "ArrowRight" ? 4 : e.key === "ArrowLeft" ? -4 : 0;
-      if (!d) return;
-      e.preventDefault();
-      set(at + d);
+    grip.setAttribute("aria-label", "How much of the " + name + " trace to uncover");
+    var a = new Image(), b = new Image();
+    a.src = "assets/ex/" + slug + "_a.webp";
+    b.src = "assets/ex/" + slug + "_b.webp";
+    var both = [a, b].map(function (im) {
+      return im.decode ? im.decode().catch(function () {}) : Promise.resolve();
     });
-    set(50);
-    return fig;
+    box.classList.add("swap");
+    Promise.all(both).then(function () {
+      if (exAt !== k) return;
+      imA.src = a.src; imA.alt = name + ", the starting image";
+      imB.src = b.src; imB.alt = name + " traced: silhouette in grey, line art in black";
+      box.classList.remove("swap");
+    });
   }
 
-  // Quattro, una riga sola: tutti in vista, niente da aprire.
-  EX.forEach(function (e) { grid.appendChild(compare(e[0], e[1])); });
+  EX.forEach(function (e, k) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "ex-pick";
+    b.setAttribute("role", "tab");
+    b.innerHTML = '<span class="thumb paper"><img loading="lazy" alt="" src="assets/ex/' + e[0] +
+      '_a.webp"></span><span class="n">' + e[1] + "</span>";
+    b.addEventListener("click", function () { showEx(k); });
+    b.addEventListener("keydown", function (ev) {
+      var d = ev.key === "ArrowRight" ? 1 : ev.key === "ArrowLeft" ? -1 : 0;
+      if (!d) return;
+      ev.preventDefault();
+      var n = (k + d + EX.length) % EX.length;
+      exPicks.children[n].focus(); showEx(n);
+    });
+    exPicks.appendChild(b);
+  });
+  cmpSet(50);
+  showEx(0);
+
+  /* ------------------------------------- come funziona: i tre stati */
+  // Il passo che sta a meta' schermo decide lo stato del riquadro fermo. Solo
+  // su schermo largo: stretto il riquadro non c'e' e ogni passo ha la sua immagine.
+  var howFrame = $("how-frame"), howTrack = $("how-track");
+  var howSteps = document.querySelectorAll(".how-step");
+  function howShow(k) {
+    howFrame.setAttribute("data-step", k);
+    Array.prototype.forEach.call(howSteps, function (li, j) { li.classList.toggle("on", j === k); });
+    Array.prototype.forEach.call(howTrack.children, function (t, j) { t.classList.toggle("on", j <= k); });
+  }
+  if ("IntersectionObserver" in window) {
+    var howSeen = new IntersectionObserver(function (list) {
+      list.forEach(function (e) {
+        if (e.isIntersecting) { howShow(parseInt(e.target.getAttribute("data-k"), 10)); }
+      });
+    }, { rootMargin: "-45% 0px -45% 0px" });
+    Array.prototype.forEach.call(howSteps, function (li) { howSeen.observe(li); });
+  } else {
+    Array.prototype.forEach.call(howSteps, function (li) { li.classList.add("on"); });
+  }
 
   /* ------------------------------------------------------------ modali */
   document.querySelectorAll("[data-open]").forEach(function (b) {
@@ -822,7 +885,7 @@
         if (e.isIntersecting) { e.target.classList.add("in"); seen.unobserve(e.target); }
       });
     }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
-    document.querySelectorAll("main .sec, main .facts").forEach(function (el) {
+    document.querySelectorAll("main .sec-head, main .facts, main .ex-show, main .app-show, main .tiles, main .cinema, main .plans, main .faq-wrap, main .outro").forEach(function (el) {
       if (el.getBoundingClientRect().top < window.innerHeight) return;
       el.classList.add("reveal");
       seen.observe(el);
