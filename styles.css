@@ -699,7 +699,7 @@ b{font-weight:600}
 }
 .plans:hover .plan::before,.plans:hover .plan::after{opacity:1}
 .plan:hover{transform:translateY(-3px);box-shadow:var(--shadow-lift)}
-/* Commercial: il bordo d'accento, non un colore di fondo diverso per tema */
+/* la card in evidenza (Pro): il bordo d'accento, non un colore di fondo diverso per tema */
 .plan.pick-me{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),var(--shadow-lift)}
 .plan-name{font-size:clamp(28px,2vw,36px);font-weight:700;letter-spacing:-.03em;line-height:1}
 .plan-for{font-size:16px;color:var(--ink-2);margin-top:-4px}
