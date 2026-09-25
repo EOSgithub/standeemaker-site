@@ -18,7 +18,10 @@
 <link rel="preload" href="assets/fonts/barlow-condensed-600.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/barlow-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/turn/t00.webp?v=5" as="image">
-<link rel="stylesheet" href="styles.css">
+<!-- ?v= su foglio e script: GitHub Pages li lascia in cache dieci minuti, e una
+     pagina nuova con lo script vecchio si rompe. Si alza a ogni modifica di
+     styles.css o main.js, come TURN_V per le viste. -->
+<link rel="stylesheet" href="styles.css?v=2">
 </head>
 <body>
 
@@ -456,6 +459,6 @@
   </div>
 </dialog>
 
-<script src="main.js"></script>
+<script src="main.js?v=2"></script>
 </body>
 </html>
