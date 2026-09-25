@@ -517,10 +517,15 @@ b{font-weight:600}
 @keyframes how-fill{from{transform:scaleX(.08)}to{transform:scaleX(1)}}
 
 .how-steps{list-style:none;margin:0;padding:0;view-timeline-name:--how}
+/* I passi non in lettura si fanno indietro col colore, non con l'opacita': al
+   22% il testo scendeva a un contrasto di 1,5:1 e chi vede poco non lo
+   leggeva. Col grigio piu' chiaro della pagina restano leggibili (AA). */
 .how-step{
   min-height:70vh;display:flex;flex-direction:column;justify-content:center;gap:16px;
-  opacity:.22;transform:translateY(10px);transition:opacity .7s var(--out),transform .9s var(--out);
+  transform:translateY(10px);transition:transform .9s var(--out);
 }
+.how-step h3,.how-step p{transition:color .6s var(--out)}
+.how-step:not(.on) h3,.how-step:not(.on) p{color:var(--ink-3)}
 .how-step:first-child{min-height:56vh;justify-content:flex-start;padding-top:10vh}
 .how-step:last-child{min-height:78vh}
 .how-step.on{opacity:1;transform:none}
@@ -531,7 +536,9 @@ b{font-weight:600}
 @media (max-width:900px){
   .how-grid{grid-template-columns:minmax(0,1fr);gap:0}
   .how-visual{display:none}
-  .how-step,.how-step:first-child,.how-step:last-child{min-height:0;opacity:1;transform:none;padding:0 0 56px}
+  .how-step,.how-step:first-child,.how-step:last-child{min-height:0;transform:none;padding:0 0 56px}
+  .how-step:not(.on) h3{color:var(--ink)}
+  .how-step:not(.on) p{color:var(--ink-2)}
   .how-step:last-child{padding-bottom:0}
   .how-inline{display:grid;place-items:center;position:relative;aspect-ratio:5/4;margin:0 0 8px}
   .how-inline.paper img{max-width:84%;max-height:84%;width:auto;height:auto;object-fit:contain}

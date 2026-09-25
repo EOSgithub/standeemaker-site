@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Standee Maker: turn any picture into a printable standee</title>
 <meta name="description" content="Standee Maker traces your image, builds a 3D-printable figure and the stand that holds it next to your card. Runs offline on Windows. Free trial, no account.">
+<link rel="canonical" href="https://eosgithub.github.io/standeemaker-site/">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#f4f4f2" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0c0d0f" media="(prefers-color-scheme: dark)">
@@ -23,14 +24,25 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
+<!-- Per i motori di ricerca: che cos'e' e quanto costa. Le stelline nei
+     risultati arrivano solo con recensioni vere (aggregateRating), che ancora
+     non ci sono. I prezzi vanno tenuti uguali a SITE.prices in main.js. -->
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"SoftwareApplication",
+ "name":"Standee Maker",
+ "description":"Traces your image, builds a 3D-printable figure and the stand that holds it next to your card. Runs offline on Windows.",
+ "url":"https://eosgithub.github.io/standeemaker-site/","image":"https://eosgithub.github.io/standeemaker-site/assets/social.png",
+ "applicationCategory":"DesignApplication","operatingSystem":"Windows 10, Windows 11",
+ "offers":{"@type":"AggregateOffer","priceCurrency":"EUR","lowPrice":"19.99","highPrice":"99.99","offerCount":"2"}}
+</script>
 <!-- I font stanno in assets/fonts: nessuna richiesta a terzi all'apertura della pagina. -->
 <link rel="preload" href="assets/fonts/bricolage-grotesque-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/geist-sans-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/turn/t00.webp?v=6" as="image">
+<link rel="preload" as="image" href="assets/turn/t00.webp?v=6" fetchpriority="high">
 <!-- ?v= su foglio e script: GitHub Pages li lascia in cache dieci minuti, e una
      pagina nuova con lo script vecchio si rompe. Si alza a ogni modifica di
      styles.css o main.js, come TURN_V per le viste. -->
-<link rel="stylesheet" href="styles.css?v=26">
+<link rel="stylesheet" href="styles.css?v=27">
 </head>
 <body>
 <div class="sentinel" aria-hidden="true"></div>
@@ -82,7 +94,7 @@
     <div class="hero-stage stage" id="hero-art">
       <div class="turn-box" id="turn" tabindex="0" role="slider" aria-label="Turn the finished part"
            aria-valuemin="0" aria-valuemax="71" aria-valuenow="0">
-        <img id="turn-img" src="assets/turn/t00.webp?v=6" width="1040" height="1360" draggable="false"
+        <img id="turn-img" src="assets/turn/t00.webp?v=6" fetchpriority="high" width="1040" height="1360" draggable="false"
              alt="The finished part: the figure slotted into its stand, next to a card in its toploader">
         <span class="turn-tag" id="turn-tag">
           <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></svg>
@@ -91,7 +103,7 @@
       </div>
       <span class="floor" aria-hidden="true"></span>
       <figure class="hero-card paper" aria-hidden="true">
-        <img src="assets/source.webp" width="821" height="668" alt="">
+        <img src="assets/source_card.webp" width="440" height="358" loading="lazy" alt="">
       </figure>
     </div>
 
@@ -131,7 +143,7 @@
         <div class="how-frame" id="how-frame" data-step="0">
           <div class="how-layer paper" data-k="0"><img src="assets/source.webp" width="821" height="668" loading="lazy"
                alt="The starting picture: a colour character on a transparent background"></div>
-          <div class="how-layer paper" data-k="1"><img src="assets/trace/kelpurr.svg" loading="lazy"
+          <div class="how-layer paper" data-k="1"><img src="assets/trace/kelpurr.svg" width="567" height="459" loading="lazy"
                alt="The traced picture: silhouette in grey, line art in black"></div>
           <div class="how-layer stage" data-k="2" id="print-slot"><span class="floor" aria-hidden="true"></span><img class="still" src="assets/turn/t65.webp?v=6" width="1040" height="1360" loading="lazy"
                alt="The finished part in its stand, seen from the side"></div>
@@ -150,7 +162,7 @@
           <p><span class="ph">A drawing, a render or a photo.</span> <span class="ph">If it has a background,</span> <span class="ph">a few clicks take it out.</span></p>
         </li>
         <li class="how-step" data-k="1">
-          <figure class="how-inline paper"><img src="assets/trace/kelpurr.svg" loading="lazy" alt=""></figure>
+          <figure class="how-inline paper"><img src="assets/trace/kelpurr.svg" width="567" height="459" loading="lazy" alt=""></figure>
           <h3>Trace it</h3>
           <p><span class="ph">The outline and the line art</span> <span class="ph">come out as two SVGs</span> <span class="ph">that sit exactly on top of each other.</span></p>
         </li>
@@ -540,6 +552,6 @@
   </div>
 </dialog>
 
-<script src="main.js?v=15"></script>
+<script src="main.js?v=16"></script>
 </body>
 </html>

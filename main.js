@@ -346,7 +346,7 @@
     b.className = "ex-pick";
     b.setAttribute("role", "tab");
     b.innerHTML = '<span class="thumb paper"><img loading="lazy" alt="" src="assets/ex/' + e[0] +
-      '_a.webp"></span><span class="n">' + e[1] + "</span>";
+      '_t.webp"></span><span class="n">' + e[1] + "</span>";
     b.addEventListener("click", function () { showEx(k); });
     b.addEventListener("keydown", function (ev) {
       var d = ev.key === "ArrowRight" ? 1 : ev.key === "ArrowLeft" ? -1 : 0;
