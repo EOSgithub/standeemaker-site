@@ -26,15 +26,15 @@
 <meta name="twitter:card" content="summary_large_image">
 <!-- Per i motori di ricerca: che cos'e' e quanto costa. Le stelline nei
      risultati arrivano solo con recensioni vere (aggregateRating), che ancora
-     non ci sono. Il prezzo del lancio (19.99) va tenuto uguale a SITE.price in main.js e a
-     LAUNCH_PRICE in license.py. -->
+     non ci sono. Il prezzo del lancio (19.99) sta nella card della Beta e basta, ed e'
+     lo stesso di SITE.price in main.js e di LAUNCH_PRICE in license.py. -->
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"SoftwareApplication",
  "name":"Standee Maker",
  "description":"Traces your image, builds a 3D-printable figure and the stand that holds it next to your card. Runs offline on Windows.",
  "url":"https://eosgithub.github.io/standeemaker-site/","image":"https://eosgithub.github.io/standeemaker-site/assets/social.png",
  "applicationCategory":"DesignApplication","operatingSystem":"Windows 10, Windows 11",
- "offers":{"@type":"Offer","priceCurrency":"EUR","price":"0","description":"Free during the Beta; a one-time licence of 19.99 EUR at launch"}}
+ "offers":{"@type":"Offer","priceCurrency":"EUR","price":"0","description":"Free during the Beta"}}
 </script>
 <!-- I font stanno in assets/fonts: nessuna richiesta a terzi all'apertura della pagina. -->
 <link rel="preload" href="assets/fonts/bricolage-grotesque-var.woff2" as="font" type="font/woff2" crossorigin>
@@ -43,7 +43,7 @@
 <!-- ?v= su foglio e script: GitHub Pages li lascia in cache dieci minuti, e una
      pagina nuova con lo script vecchio si rompe. Si alza a ogni modifica di
      styles.css o main.js, come TURN_V per le viste. -->
-<link rel="stylesheet" href="styles.css?v=31">
+<link rel="stylesheet" href="styles.css?v=33">
 </head>
 <body>
 <div class="sentinel" aria-hidden="true"></div>
@@ -121,7 +121,7 @@
         </li>
         <li>
           <span class="tile-i"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg></span>
-          <span>Free now, &euro;19.99 once at launch</span>
+          <span>Free during the Beta</span>
         </li>
         <li>
           <span class="tile-i"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="m16.5 16.5 5 5"/><path d="M2 21a8 8 0 0 1 11.531-7.18"/><path d="m21.5 16.5-5 5"/><circle cx="10" cy="8" r="5"/></svg></span>
@@ -291,7 +291,7 @@
       <p><b>Want half off at launch?</b> Send us one line and we will write to you once, when
       the paid version is out, with a code for 50% off during its first month. No
       newsletter.</p>
-      <a class="btn" href="mailto:standeemaker.support@gmail.com?subject=Standee%20Maker%20launch%20list&amp;body=Please%20add%20me%20to%20the%20Standee%20Maker%20launch%20list.%20I%20understand%20you%20will%20write%20to%20me%20once%2C%20at%20launch.">
+      <a class="btn" href="mailto:standeemaker.support@gmail.com?subject=Standee%20Maker%20launch%20list&amp;body=Hi%2C%0A%0Aplease%20add%20me%20to%20the%20Standee%20Maker%20launch%20list.%0A%0AI%20understand%20that%20you%20will%20write%20to%20me%20once%2C%20when%20the%20paid%20version%20is%20out%2C%20with%20a%20code%20for%2050%25%20off%20during%20its%20first%20month%2C%20and%20that%20you%20will%20use%20my%20address%20for%20nothing%20else.%20I%20can%20ask%20to%20be%20removed%20at%20any%20time%20by%20replying%20to%20this%20message.%0A%0AIf%20you%20like%2C%20tell%20me%3A%0A-%20What%20I%20would%20use%20it%20for%20%28trading%20cards%2C%20miniatures%2C%20something%20else%29%3A%0A-%20My%20printer%3A%0A">
         <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
         Join the launch list
       </a>
@@ -361,9 +361,12 @@
         </details>
         <details>
           <summary>Windows says it protected my PC. What now?</summary>
-          <div class="answer">That is SmartScreen. Windows shows it for downloads it has not
-          seen many times yet, and every new release of a small program starts there. Choose
-          <b>More info</b>, then <b>Run anyway</b>. Download the setup only from this page.</div>
+          <div class="answer">That is SmartScreen. The setup is not signed with a code-signing
+          certificate: it costs around &euro;500 and I cannot afford it at the moment. Without one,
+          Windows warns about every download it has not seen many times, and it starts again with each
+          new release. Choose <b>More info</b>, then <b>Run anyway</b>. The warning is about who
+          published the file, and it does not mean Windows found anything in it. Download the setup
+          only from this page, and compare its SHA-256 with the one shown there.</div>
         </details>
         <details>
           <summary>Does this page track me?</summary>
@@ -375,7 +378,7 @@
         </details>
         <details>
           <summary>What happens when the Beta ends?</summary>
-          <div class="answer">If the Beta goes well, the paid version comes out at &euro;19.99, once, with no
+          <div class="answer">If the Beta goes well, a paid version comes out as a one-time purchase, with no
           subscription, and we announce it here and in the program. People on the
           <a href="#beta">launch list</a> get 50% off during its first month. Beta copies
           stop being a Beta, and you install 1.0 over them without losing your library. What you
@@ -444,7 +447,7 @@
         <dt>Use</dt><dd>Personal: print for yourself and give away what you print, not
         for sale.</dd>
         <dt>Account</dt><dd>None. Nothing is registered and nothing is uploaded.</dd>
-        <dt>Later</dt><dd>If the Beta goes well, the paid version will be &euro;19.99, once. The
+        <dt>Later</dt><dd>If the Beta goes well, a paid version follows. The
         <a href="#beta">launch list</a> gets 50% off during its first month.</dd>
       </dl>
       <p>Already installed? This setup updates it in place and keeps your library and
@@ -452,16 +455,48 @@
       <div class="callout" id="trial-state">
         <b>The file is not published yet.</b> The link will appear here at release.
       </div>
-      <!-- SmartScreen: Windows lo mostra per i download che ha visto poche volte,
-           e ogni versione nuova di un programma piccolo ricomincia da li'.
-           Detto qui, prima del clic, spaventa meno di quando compare. Il nome
-           dell'editore non si scrive: Windows lo mostra solo se il setup e'
-           firmato. La stessa cosa sta nelle FAQ. -->
-      <div class="winnote">
-        <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>
-        <p><b>Windows may warn you.</b> New downloads can show &ldquo;Windows protected
-        your PC&rdquo;. Choose <b>More info</b>, then <b>Run anyway</b>.</p>
-      </div>
+      <!-- SmartScreen: il setup non e' firmato (un certificato costa circa 500
+           euro, e per ora non ci sono), quindi Windows lo segnala a chiunque lo
+           scarichi. Detto qui, prima del clic, spaventa meno di quando compare.
+           Le due finestre sono disegnate qui, non catturate: sono illustrazioni
+           (lo dice la didascalia) e non dipendono dal tema ne' dalla lingua di
+           Windows di chi le guarda. Il nome del file e' quello del setup
+           (installer.iss, OutputBaseFilename). -->
+      <section class="smart" aria-labelledby="smart-h">
+        <h3 id="smart-h">Windows will warn you</h3>
+        <p>The setup is not signed with a code-signing certificate. It costs around &euro;500
+        and I cannot afford it at the moment, so Windows SmartScreen shows
+        &ldquo;Windows protected your PC&rdquo; for the download. It is about who published the
+        file, and does not mean Windows found anything in it. Do this:</p>
+        <div class="sm-steps">
+          <figure>
+            <div class="sm-win" aria-hidden="true">
+              <div class="sm-bar">Windows protected your PC</div>
+              <div class="sm-in">
+                <p>Microsoft Defender SmartScreen prevented an unrecognized app from starting.
+                Running this app might put your PC at risk.</p>
+                <span class="sm-link sm-mark">More info</span>
+                <div class="sm-btns"><span class="sm-btn">Don&rsquo;t run</span></div>
+              </div>
+            </div>
+            <figcaption><b>1</b> Choose <b>More info</b></figcaption>
+          </figure>
+          <figure>
+            <div class="sm-win" aria-hidden="true">
+              <div class="sm-bar">Windows protected your PC</div>
+              <div class="sm-in">
+                <p>Microsoft Defender SmartScreen prevented an unrecognized app from starting.
+                Running this app might put your PC at risk.</p>
+                <p class="sm-app">App: Standee Maker Setup 0.9.0.exe<br>Publisher: Unknown publisher</p>
+                <div class="sm-btns"><span class="sm-btn sm-mark">Run anyway</span><span class="sm-btn">Don&rsquo;t run</span></div>
+              </div>
+            </div>
+            <figcaption><b>2</b> Choose <b>Run anyway</b></figcaption>
+          </figure>
+        </div>
+        <p class="sm-note">Illustrations: your Windows may look a little different. Download the setup
+        only from this page, and compare its SHA-256 below with the file you got.</p>
+      </section>
     </div>
 
     <div class="dlg-foot">
