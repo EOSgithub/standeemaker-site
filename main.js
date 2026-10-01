@@ -986,15 +986,20 @@
   });
 
   /* ------------------------------------------------- prova: il download */
-  var dl = $("trial-dl"), dlState = $("trial-state"), dlMeta = $("trial-meta");
+  var dl = $("trial-dl"), dlMeta = $("trial-meta");
   if (SITE.trial.url) {
     dl.href = SITE.trial.url;
     dl.removeAttribute("aria-disabled");
     dl.setAttribute("download", "");
-    dlState.innerHTML = "The download starts straight away: no email, no sign-up.";
-    dlMeta.innerHTML = "Windows installer (.exe), " + (SITE.trial.size || "64-bit") +
-      (SITE.trial.sha256 ? "<br>SHA-256 " + SITE.trial.sha256 : "");
+    dlMeta.textContent = "Windows installer (.exe), " + (SITE.trial.size || "64-bit");
+    // L'impronta sta in una sezione chiusa ("If you want to be sure"), per chi
+    // vuole controllare: non in vista, dove spaventa chi non sa cos'e'.
+    if (SITE.trial.sha256) {
+      $("trial-sha").textContent = SITE.trial.sha256;
+      $("trial-sure").hidden = false;
+    }
   } else {
+    dlMeta.textContent = "The download is not available yet.";
     dl.addEventListener("click", function (e) { e.preventDefault(); });
   }
   // #download apre subito questa finestra: e' l'indirizzo a cui l'app manda

@@ -938,6 +938,17 @@ dialog[open]::backdrop{background:rgba(10,11,13,.55);-webkit-backdrop-filter:blu
 .sm-mark{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
 .dlg-body .smart .sm-note{font-size:13px;color:var(--ink-3)}
 @media (max-width:520px){.sm-steps{grid-template-columns:1fr}}
+
+/* "If you want to be sure": chiusa, discreta, per chi vuole controllare l'impronta */
+.sure{border-top:1px solid var(--line-soft);padding-top:12px}
+.sure summary{cursor:pointer;font-size:14px;color:var(--ink-3);list-style:none;width:max-content}
+.sure summary::-webkit-details-marker{display:none}
+.sure summary::before{content:"+";display:inline-block;width:1.1em;color:var(--accent-text)}
+.sure[open] summary::before{content:"\2212"}
+.sure summary:hover{color:var(--ink)}
+.dlg-body .sure p{font-size:14px;margin-top:10px}
+.sure code{font-family:var(--mono);font-size:12.5px;color:var(--ink)}
+.sure code.sha{display:block;margin-top:8px;padding:9px 11px;border-radius:var(--r-sm);background:var(--bg-2);word-break:break-all;line-height:1.5;user-select:all}
 .hint{font-size:13.5px;color:var(--ink-3);text-align:center}
 .btn[aria-disabled="true"]{opacity:.55;cursor:not-allowed;transform:none;box-shadow:none}
 

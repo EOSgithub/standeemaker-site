@@ -43,7 +43,7 @@
 <!-- ?v= su foglio e script: GitHub Pages li lascia in cache dieci minuti, e una
      pagina nuova con lo script vecchio si rompe. Si alza a ogni modifica di
      styles.css o main.js, come TURN_V per le viste. -->
-<link rel="stylesheet" href="styles.css?v=34">
+<link rel="stylesheet" href="styles.css?v=35">
 </head>
 <body>
 <div class="sentinel" aria-hidden="true"></div>
@@ -64,7 +64,7 @@
       <a href="#how">How it works</a>
       <a href="#examples">Examples</a>
       <a href="#tutorial">Tutorial</a>
-      <a href="#pricing">Beta</a>
+      <a href="#pricing">Download</a>
     </nav>
     <button class="btn btn-s" type="button" data-open="dlg-trial">Download the free Beta</button>
   </div>
@@ -259,8 +259,7 @@
        Il prezzo del lancio sta in SITE.price (main.js) e in license.LAUNCH_PRICE. -->
   <section id="pricing" class="wrap sec">
     <div class="sec-head center">
-      <h2 data-split>Free while it is in Beta.</h2>
-      <p data-reveal style="--d:200ms"><span class="ph">The Beta is the whole program,</span> <span class="ph">with no limits.</span> <span class="ph">Tell us what works</span> <span class="ph">and what does not.</span></p>
+      <h2 data-split>Download</h2>
     </div>
 
     <div class="plans one" data-reveal>
@@ -369,7 +368,7 @@
           Windows warns about every download it has not seen many times, and it starts again with each
           new release. Choose <b>More info</b>, then <b>Run anyway</b>. The warning is about who
           published the file, and it does not mean Windows found anything in it. Download the setup
-          only from this page, and compare its SHA-256 with the one shown there.</div>
+          only from this page.</div>
         </details>
         <details>
           <summary>Does this page track me?</summary>
@@ -455,9 +454,6 @@
       </dl>
       <p>Already installed? This setup updates it in place and keeps your library and
       your settings.</p>
-      <div class="callout" id="trial-state">
-        <b>The file is not published yet.</b> The link will appear here at release.
-      </div>
       <!-- SmartScreen: il setup non e' firmato (un certificato costa circa 500
            euro, e per ora non ci sono), quindi Windows lo segnala a chiunque lo
            scarichi. Detto qui, prima del clic, spaventa meno di quando compare.
@@ -497,9 +493,18 @@
             <figcaption><b>2</b> Choose <b>Run anyway</b></figcaption>
           </figure>
         </div>
-        <p class="sm-note">Illustrations: your Windows may look a little different. Download the setup
-        only from this page, and compare its SHA-256 below with the file you got.</p>
+        <p class="sm-note">Illustrations: your Windows may look a little different.</p>
       </section>
+
+      <!-- Per chi vuole controllare il file: chiusa, e nascosta finche' main.js non
+           ha l'impronta (SITE.trial.sha256, scritta da site/release.py). -->
+      <details class="sure" id="trial-sure" hidden>
+        <summary>If you want to be sure</summary>
+        <p>Download the setup only from this page. To check that your copy is the one published
+        here, run this in PowerShell and compare the result with the SHA-256 below.</p>
+        <code class="sha">Get-FileHash .\StandeeMaker-Beta-0.9.0-Setup.exe</code>
+        <code class="sha" id="trial-sha"></code>
+      </details>
     </div>
 
     <div class="dlg-foot">
@@ -559,6 +564,6 @@
   </div>
 </dialog>
 
-<script src="main.js?v=25"></script>
+<script src="main.js?v=26"></script>
 </body>
 </html>
