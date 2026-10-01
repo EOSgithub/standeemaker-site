@@ -15,21 +15,32 @@
     // deploy.py ne fa version.json, che l'app legge per dire che c'e' una
     // versione nuova: cambiarla qui e' annunciarla. `notes` e' la riga che
     // l'avviso nell'app mostra sotto il titolo (vuota: una frase generica).
-    version: "1.0.0",
+    version: "0.9.0",
     notes: "",
+    // Il setup della Beta. Il nome `trial` e' rimasto (e con lui l'id
+    // dlg-trial e l'ancora #download, che l'app usa): e' il download che la
+    // pagina offre, e cambiarne il nome rompeva i link.
     trial: {
-      // TODO rilascio: URL del setup firmato, dimensione e impronta
-      url: null,                    // es. "https://.../Standee Maker Setup 1.0.0.exe"
+      // TODO rilascio: URL del setup (Release di GitHub: ne conta anche i download), dimensione e impronta
+      url: null,                    // es. "https://.../Standee Maker Setup 0.9.0.exe"
       size: null,                   // es. "48 MB"
       sha256: null                  // es. "9f2c..."
     },
-    buy: {
-      // TODO rilascio: i due checkout Polar (vedi license.py)
-      pro: null,                    // es. "https://.../checkout/buy/..."
-      commercial: null,
-      vendor: "Polar"               // Polar Software, Inc.: il merchant of record
-    },
-    prices: { pro: "19.99", commercial: "99.99" },
+    // Il prezzo del lancio. Non c'e' ancora un checkout: la Beta e' gratis e la
+    // Commercial non si vende (EULA 3.3). Va tenuto uguale a LAUNCH_PRICE in
+    // license.py e all'offerta nel JSON-LD di index.html.
+    price: "19.99",
+    // La Beta e' finita? deploy.py lo scrive in version.json e le copie Beta
+    // installate lo leggono col controllo degli aggiornamenti: da quel momento
+    // smettono di essere una Beta (license.BETA). Mettere true SOLO nel giorno
+    // in cui la 1.0 si scarica davvero da qui.
+    betaEnded: false,
+    // GoatCounter, solo durante la Beta, per contare quanta gente guarda la
+    // pagina e quanta preme Download. Il codice e' quello scelto registrandosi
+    // su goatcounter.com (https://CODICE.goatcounter.com). Finche' e' null non
+    // parte nessuna richiesta. A Beta finita rimetterlo a null e togliere la
+    // sezione 3.4 della Privacy (legal/PRIVACY.txt), poi rifare make_legal.
+    stats: null,
     // Le foto vere del pezzo stampato (solo soggetti di samples/; WebP, lato
     // lungo 1500 px, senza metadati). Finche' e' null la hero mostra il pezzo
     // che gira; con la foto, la foto prende la hero e il pezzo scende al terzo
@@ -452,9 +463,6 @@
   document.querySelectorAll("[data-open]").forEach(function (b) {
     b.addEventListener("click", function () {
       var dlg = $(b.getAttribute("data-open"));
-      // "Buy Pro" e "Buy Commercial" aprono lo stesso modale, gia' sull'edizione giusta
-      var ed = b.getAttribute("data-edition");
-      if (ed && $("pick-" + ed)) { $("pick-" + ed).checked = true; refreshBuy(); }
       if (dlg && typeof dlg.showModal === "function") { dlg.showModal(); }
       else if (dlg) { dlg.setAttribute("open", ""); }
     });
@@ -462,6 +470,11 @@
   document.querySelectorAll("dialog").forEach(function (dlg) {
     dlg.querySelectorAll("[data-close]").forEach(function (b) {
       b.addEventListener("click", function () { dlg.close(); });
+    });
+    // un link a un'ancora della pagina, cliccato dentro un modale, lo chiude:
+    // se no la pagina scorre dietro e chi legge non se ne accorge
+    dlg.querySelectorAll('a[href^="#"]').forEach(function (a) {
+      a.addEventListener("click", function () { dlg.close(); });
     });
     // clic sullo sfondo: il target e' il dialog stesso solo fuori dalla scatola
     dlg.addEventListener("click", function (e) {
@@ -582,8 +595,8 @@
             "the whole drawing at once; here you fix one line at a time.",
       notes: [
         [[15, 11, 39, 33], "<b>Erase</b> (E) removes line art under the brush."],
-        [[225, 12, 370, 30], "The diameter is given in millimetres of the finished part, not just " +
-          "in pixels: you can tell how big the stroke really is."],
+        [[225, 12, 370, 30], "The diameter is given in millimetres of the finished part as well as in " +
+          "pixels, so you can tell how big the stroke really is."],
         [[423, 595, 32, 24], "A short dash floating on the front leg, a patch of shading read as a " +
           "line. One stroke, and it turns red: it is about to go."],
         [[268, 832, 110, 24], "A running total of what you have removed, in mm&sup2;."]
@@ -642,8 +655,7 @@
         [[1108, 165, 362, 230], "The drawing to scale answers what the numbers leave out: <b>how " +
           "much of the figure stands above the card</b> in its toploader. 55 mm here."],
         [[1108, 566, 362, 26], "<b>Advanced</b>: how thick the silhouette and the line art come " +
-          "out, and <b>Base height</b>, 10 mm inside the slot plus what stays in sight. Set once, " +
-          "then left alone."]
+          "out, and <b>Base height</b>, 10 mm inside the slot plus what stays in sight."]
       ],
       tip: "Everything above the base stays as it is: the base goes up, the figure does not move." },
 
@@ -683,7 +695,7 @@
     { ch: 4, img: "stand", size: SHOT,
       title: "The stand",
       lede: "The <b>Stand</b> page makes the block the figure slides into, next to the card. It is " +
-            "not a subject: it does not count as one during the trial.",
+            "not tied to a picture: it is built from the slot widths of the figure and the card.",
       notes: [
         [[1425, 6, 55, 36], "The <b>Stand</b> page, top right."],
         [[1202, 98, 268, 30], "<b>Remove toploader slot</b> is for a figure printed on its own: " +
@@ -756,7 +768,7 @@
   // Come TURN_V: i riquadri di TOUR sono in pixel delle schermate, e una
   // schermata vecchia ancora nella cache sotto i riquadri nuovi li mette nel
   // posto sbagliato. Si alza a ogni `make_tutorial.py`.
-  var TOUR_V = "?v=11";
+  var TOUR_V = "?v=12";
   function src(step) { return step.img ? "assets/tutorial/" + step.img + ".webp" + TOUR_V : null; }
 
   // la barra dei capitoli: un segmento per passo, e il capitolo si preme
@@ -991,36 +1003,6 @@
     trialDlg.showModal();
   }
 
-  /* -------------------------------------------------- acquisto: i piani */
-  var picks = $("picks"), go = $("buy-go"), goLabel = $("buy-go-label"), buyMeta = $("buy-meta");
-  var NAMES = { pro: "Pro", commercial: "Commercial" };
-
-  function chosen() {
-    var r = picks.querySelector("input[name=edition]:checked");
-    return r ? r.value : "pro";
-  }
-  function refreshBuy() {
-    var k = chosen(), url = SITE.buy[k];
-    goLabel.innerHTML = "Go to checkout: " + NAMES[k] + ", &euro;&nbsp;" + SITE.prices[k];
-    if (url) {
-      go.href = url;
-      go.target = "_blank";
-      go.rel = "noopener";
-      go.removeAttribute("aria-disabled");
-      buyMeta.innerHTML = "Checkout opens on " + (SITE.buy.vendor || "the reseller") +
-        " in a new tab.";
-    } else {
-      go.href = "#";
-      go.setAttribute("aria-disabled", "true");
-      buyMeta.innerHTML = "<b>The checkout is not open yet.</b> At release this button takes you to payment.";
-    }
-  }
-  picks.addEventListener("change", refreshBuy);
-  go.addEventListener("click", function (e) {
-    if (go.getAttribute("aria-disabled") === "true") { e.preventDefault(); }
-  });
-  refreshBuy();
-
   /* ------------------------------------------------ le cose che entrano */
   // I titoli con data-split entrano parola per parola: ogni parola va nel suo
   // <span class="w">, con il suo numero d'ordine per il ritardo. Gli elementi
@@ -1125,6 +1107,32 @@
         c.style.setProperty("--my", (e.clientY - r.top) + "px");
       });
     });
+  }
+
+  /* -------------------------------------------------- statistiche (Beta) */
+  // GoatCounter conta le visite aggregate: niente cookie, niente archivio
+  // locale, e il suo gestore non conserva ne' l'indirizzo IP ne' lo
+  // User-Agent (https://www.goatcounter.com/privacy). Non parte per chi ha
+  // chiesto di non essere tracciato (Do Not Track o Global Privacy Control),
+  // ne' dalla macchina di chi sviluppa. I click che interessano (apertura del
+  // download, download, lista di lancio, tutorial) si segnano con gli attributi
+  // data-goatcounter-click, che vanno messi PRIMA di caricare lo script.
+  if (SITE.stats && !location.hostname.match(/^(localhost|127\.|\[::1\])/) &&
+      navigator.doNotTrack !== "1" && !navigator.globalPrivacyControl) {
+    var tag = function (sel, name) {
+      document.querySelectorAll(sel).forEach(function (el) {
+        el.setAttribute("data-goatcounter-click", name);
+      });
+    };
+    tag('[data-open="dlg-trial"]', "open-download");
+    tag("#trial-dl", "download");
+    tag('a[href^="mailto:"][href*="launch"]', "join-launch-list");
+    tag("[data-tour]", "watch-tutorial");
+    var gc = document.createElement("script");
+    gc.async = true;
+    gc.src = "//gc.zgo.at/count.js";
+    gc.setAttribute("data-goatcounter", "https://" + SITE.stats + ".goatcounter.com/count");
+    document.head.appendChild(gc);
   }
 
   /* ---------------------------------------------- segnaposto ancora vivi */
