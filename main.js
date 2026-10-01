@@ -22,7 +22,7 @@
     // pagina offre, e cambiarne il nome rompeva i link.
     trial: {
       // Li scrive `python site/release.py` (Release di GitHub, che conta anche i download)
-      url: "https://github.com/EOSgithub/standeemaker-site/releases/download/v0.9.0/Standee-Maker-Setup-0.9.0.exe",
+      url: "https://github.com/EOSgithub/standeemaker-site/releases/download/v0.9.0/StandeeMaker-Beta-0.9.0-Setup.exe",
       size: "44 MB",
       sha256: "e949d331565b1baf8c1eadcd7a01e0bff9d8e1f002425b8336d07f623fe2a7a4"
     },
