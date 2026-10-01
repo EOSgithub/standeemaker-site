@@ -40,7 +40,7 @@
     // su goatcounter.com (https://CODICE.goatcounter.com). Finche' e' null non
     // parte nessuna richiesta. A Beta finita rimetterlo a null e togliere la
     // sezione 3.4 della Privacy (legal/PRIVACY.txt), poi rifare make_legal.
-    stats: null,
+    stats: "toolsmithdev",
     // Le foto vere del pezzo stampato (solo soggetti di samples/; WebP, lato
     // lungo 1500 px, senza metadati). Finche' e' null la hero mostra il pezzo
     // che gira; con la foto, la foto prende la hero e il pezzo scende al terzo
