@@ -21,10 +21,10 @@
     // dlg-trial e l'ancora #download, che l'app usa): e' il download che la
     // pagina offre, e cambiarne il nome rompeva i link.
     trial: {
-      // TODO rilascio: URL del setup (Release di GitHub: ne conta anche i download), dimensione e impronta
-      url: null,                    // es. "https://.../Standee Maker Setup 0.9.0.exe"
-      size: null,                   // es. "48 MB"
-      sha256: null                  // es. "9f2c..."
+      // Li scrive `python site/release.py` (Release di GitHub, che conta anche i download)
+      url: "https://github.com/EOSgithub/standeemaker-site/releases/download/v0.9.0/Standee-Maker-Setup-0.9.0.exe",
+      size: "44 MB",
+      sha256: "e949d331565b1baf8c1eadcd7a01e0bff9d8e1f002425b8336d07f623fe2a7a4"
     },
     // Il prezzo del lancio. Non c'e' ancora un checkout: la Beta e' gratis e la
     // Commercial non si vende (EULA 3.3). Va tenuto uguale a LAUNCH_PRICE in
