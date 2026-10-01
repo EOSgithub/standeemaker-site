@@ -512,7 +512,9 @@
       ],
       tip: "<b>Best results</b>, in order: line art, then PNGs with a transparent background, " +
            "then pictures with clear edges on a plain background. Photos work too, with more " +
-           "touch-up." },
+           "touch-up. For a soft or shaded picture, an AI image tool such as Gemini can draw a " +
+           "line-art version first: ask it &ldquo;Can you give me the lineart version of this " +
+           "image?&rdquo; and add the result to the library." },
 
     { ch: 0, img: "added", size: SHOT,
       title: "Pick it and look",
