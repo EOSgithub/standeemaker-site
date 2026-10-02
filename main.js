@@ -24,7 +24,7 @@
       // Li scrive `python site/release.py` (Release di GitHub, che conta anche i download)
       url: "https://github.com/EOSgithub/standeemaker-site/releases/download/v0.9.0/StandeeMaker-Beta-0.9.0-Setup.exe",
       size: "44 MB",
-      sha256: "e949d331565b1baf8c1eadcd7a01e0bff9d8e1f002425b8336d07f623fe2a7a4"
+      sha256: "5b6bbb36bfc784831778807fc5c00be74b8d8e8e4287690c346d656cfc4b31fe"
     },
     // Il prezzo del lancio. Non c'e' ancora un checkout: la Beta e' gratis e la
     // Commercial non si vende (EULA 3.3). Va tenuto uguale a LAUNCH_PRICE in
