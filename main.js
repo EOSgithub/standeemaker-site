@@ -1123,7 +1123,7 @@
   // User-Agent (https://www.goatcounter.com/privacy). Non parte per chi ha
   // chiesto di non essere tracciato (Do Not Track o Global Privacy Control),
   // ne' dalla macchina di chi sviluppa. I click che interessano (apertura del
-  // download, download, lista di lancio, tutorial) si segnano con gli attributi
+  // download, download, lista di lancio, tutorial, Patreon) si segnano con gli attributi
   // data-goatcounter-click, che vanno messi PRIMA di caricare lo script.
   if (SITE.stats && !location.hostname.match(/^(localhost|127\.|\[::1\])/) &&
       navigator.doNotTrack !== "1" && !navigator.globalPrivacyControl) {
@@ -1136,6 +1136,7 @@
     tag("#trial-dl", "download");
     tag('a[href^="mailto:"][href*="launch"]', "join-launch-list");
     tag("[data-tour]", "watch-tutorial");
+    tag('a[href*="patreon.com"]', "patreon");
     var gc = document.createElement("script");
     gc.async = true;
     gc.src = "//gc.zgo.at/count.js";
