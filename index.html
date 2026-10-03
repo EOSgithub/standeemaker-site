@@ -44,7 +44,7 @@
 <!-- ?v= su foglio e script: GitHub Pages li lascia in cache dieci minuti, e una
      pagina nuova con lo script vecchio si rompe. Si alza a ogni modifica di
      styles.css o main.js, come TURN_V per le viste. -->
-<link rel="stylesheet" href="styles.css?v=37">
+<link rel="stylesheet" href="styles.css?v=38">
 </head>
 <body>
 <div class="sentinel" aria-hidden="true"></div>
@@ -66,6 +66,7 @@
       <a href="#examples">Examples</a>
       <a href="#tutorial">Tutorial</a>
       <a href="#pricing">Download</a>
+      <a href="https://www.patreon.com/ToolsmithDev?utm_source=standeemaker-site&amp;utm_medium=referral&amp;utm_campaign=beta&amp;utm_content=nav" target="_blank" rel="noopener">Patreon</a>
     </nav>
     <button class="btn btn-s" type="button" data-open="dlg-trial">Download the free Beta</button>
   </div>
@@ -268,7 +269,7 @@
 
   <!-- ================================================================= beta -->
   <!-- #pricing resta come ancora (la finestra Licence del programma e il sito
-       vecchio ci puntano); #beta e' la lista di lancio. Un solo piano: la
+       vecchio ci puntano); #beta era la lista di lancio (ora e' solo un'ancora). Un solo piano: la
        Commercial non si vende, e tornera' solo se qualcuno la chiede (EULA 3.3).
        Il prezzo del lancio sta in SITE.price (main.js) e in license.LAUNCH_PRICE,
        ma la card non lo mostra piu'. -->
@@ -293,31 +294,20 @@
       </div>
     </div>
 
-    <!-- Nessun modulo e nessun servizio: un mailto. L'indirizzo arriva nella
-         casella di supporto e basta (Privacy 3.6). Si perde qualcuno che non ha
-         un programma di posta; si guadagna di non avere un terzo in piu' a cui
-         dare conto degli indirizzi. -->
-    <div class="trialbar" id="beta" data-reveal>
-      <p><b>Want half off at launch?</b> Send us one line and we will write to you once, when
-      the paid version is out, with a code for 50% off during its first month. No
-      newsletter.</p>
-      <a class="btn" href="mailto:standeemaker.support@gmail.com?subject=Standee%20Maker%20launch%20list&amp;body=Hi%2C%0A%0Aplease%20add%20me%20to%20the%20Standee%20Maker%20launch%20list.%0A%0AI%20understand%20that%20you%20will%20write%20to%20me%20once%2C%20when%20the%20paid%20version%20is%20out%2C%20with%20a%20code%20for%2050%25%20off%20during%20its%20first%20month%2C%20and%20that%20you%20will%20use%20my%20address%20for%20nothing%20else.%20I%20can%20ask%20to%20be%20removed%20at%20any%20time%20by%20replying%20to%20this%20message.%0A%0AIf%20you%20like%2C%20tell%20me%3A%0A-%20What%20I%20would%20use%20it%20for%20%28trading%20cards%2C%20miniatures%2C%20something%20else%29%3A%0A-%20My%20printer%3A%0A">
-        <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-        Join the launch list
-      </a>
-    </div>
-
     <!-- Patreon: la pagina e' di chi fa il programma (ToolsmithDev, piu' larga di
          Standee Maker), non del programma. Solo un link: niente widget e niente
-         script di Patreon, la pagina non chiama terzi. Piu' quieta della lista
-         di lancio (.quiet), perche' le due fasce non si contendano l'occhio.
+         script di Patreon, la pagina non chiama terzi. Ha preso il posto e
+         l'arancio della lista di lancio, tolta dalla pagina il 2026-10-03: il
+         "Join the launch list" delle copie 0.9.0 apre ancora #beta, e l'ancora
+         qui sotto lo fa atterrare in questo punto invece che in cima.
          Il marchio di Patreon non si ridisegna: testo, e un cuore di Lucide.
          utm_content dice da quale punto della pagina si e' partiti. -->
-    <div class="trialbar quiet" id="support" data-reveal>
+    <span id="beta" aria-hidden="true"></span>
+    <div class="trialbar" id="support" data-reveal>
       <p><b>Made by one person.</b> Standee Maker is one of the tools I build for card
-      collectors and D&amp;D tables. You can follow the work on Patreon for free, or back it
-      if you want to.</p>
-      <a class="btn btn-ghost" href="https://www.patreon.com/ToolsmithDev?utm_source=standeemaker-site&amp;utm_medium=referral&amp;utm_campaign=beta&amp;utm_content=download" target="_blank" rel="noopener">
+      collectors and D&amp;D tables. Following on Patreon is free, and backing it is up
+      to you.</p>
+      <a class="btn" href="https://www.patreon.com/ToolsmithDev?utm_source=standeemaker-site&amp;utm_medium=referral&amp;utm_campaign=beta&amp;utm_content=download" target="_blank" rel="noopener">
         <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"/></svg>
         ToolsmithDev on Patreon
       </a>
@@ -409,8 +399,7 @@
         <details>
           <summary>What happens when the Beta ends?</summary>
           <div class="answer">If the Beta goes well, a paid version comes out as a one-time purchase, with no
-          subscription, and we announce it here and in the program. People on the
-          <a href="#beta">launch list</a> get 50% off during its first month. Beta copies
+          subscription, and we announce it here and in the program. Beta copies
           stop being a Beta, and you install 1.0 over them without losing your library. What you
           made during the Beta is yours for personal use and stays usable. The
           <a href="legal/terms.html">Terms of sale</a> apply only from then.</div>
@@ -486,8 +475,7 @@
         <dt>Use</dt><dd>Personal: print for yourself and give away what you print, not
         for sale.</dd>
         <dt>Account</dt><dd>None. Nothing is registered and nothing is uploaded.</dd>
-        <dt>Later</dt><dd>If the Beta goes well, a paid version follows. The
-        <a href="#beta">launch list</a> gets 50% off during its first month.</dd>
+        <dt>Later</dt><dd>If the Beta goes well, a paid version follows.</dd>
       </dl>
       <p>Already installed? This setup updates it in place and keeps your library and
       your settings.</p>
@@ -601,6 +589,6 @@
   </div>
 </dialog>
 
-<script src="main.js?v=32"></script>
+<script src="main.js?v=33"></script>
 </body>
 </html>

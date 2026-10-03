@@ -787,10 +787,7 @@ b{font-weight:600}
 }
 .trialbar p{color:var(--ink-2);max-width:56ch}
 .trialbar p b{color:var(--ink)}
-/* la fascia di Patreon: stessa forma, senza l'arancio, perche' sotto la card
-   la cosa da fare resti una (la lista di lancio) e questa sia un di piu' */
-.trialbar.quiet{background:var(--surface);border-color:var(--line);margin-top:12px}
-.trialbar.quiet p{text-wrap:pretty}
+.trialbar p{text-wrap:pretty}
 
 @media (max-width:760px){
   .plans{grid-template-columns:minmax(0,1fr)}
